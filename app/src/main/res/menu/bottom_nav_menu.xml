@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/homeFragment"
         android:title="Menu Główne"
         android:icon="@drawable/ic_home"
         android:enabled="true"/>
     <item
-        android:id="@+id/person"
+        android:id="@+id/profileFragment"
         android:title="Profil"
         android:icon="@drawable/ic_person"
         android:enabled="true"/>

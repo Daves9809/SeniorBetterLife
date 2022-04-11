@@ -9,6 +9,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
@@ -32,24 +37,29 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnLogOut: Button
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        super.onCreate(savedInstanceState)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-        //getUserData()
+        //konfiguracja nawigacji
         val navMenu = binding.bottomNavigationView
+        val navController = findNavController(R.id.navFragment)
+        navMenu.setupWithNavController(navController)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.profileFragment))
+        setupActionBarWithNavController(navController)
 
         //fragmenty w klasie main
-        val HomeFragment = HomeFragment()
-        val ProfileFragment = ProfileFragment()
+        //val HomeFragment = HomeFragment()
+        //val ProfileFragment = ProfileFragment()
 
 
-        setCurrentFragment(HomeFragment) // ustawianie fragmentu bazowego
+        //setCurrentFragment(HomeFragment) // ustawianie fragmentu bazowego
 
-        navMenu.setOnItemSelectedListener {
+        /*navMenu.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home->setCurrentFragment(HomeFragment)
                 R.id.person->setCurrentFragment(ProfileFragment)
@@ -57,14 +67,18 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+         */
     }
+
     // zmiana fragmentu
-    private fun setCurrentFragment(fragment: Fragment) {
+    /*private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment,fragment)
             commit()
         }
     }
+
+     */
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu,menu)
