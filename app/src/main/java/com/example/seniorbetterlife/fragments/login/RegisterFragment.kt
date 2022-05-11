@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.fragments.registration
+package com.example.seniorbetterlife.fragments.login
 
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import com.example.seniorbetterlife.BaseFragment
+import com.example.seniorbetterlife.fragments.BaseFragment
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.databinding.FragmentRegisterBinding

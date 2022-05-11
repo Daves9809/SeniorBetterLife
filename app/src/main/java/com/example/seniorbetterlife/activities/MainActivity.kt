@@ -4,24 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.seniorbetterlife.R
-import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.databinding.ActivityMainBinding
-import com.example.seniorbetterlife.fragments.HomeFragment
-import com.example.seniorbetterlife.fragments.ProfileFragment
-import com.google.android.material.navigation.NavigationBarMenu
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -34,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val MAIN_DEBUG = "LOG_DEBUG"
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var btnLogOut: Button
 
 
 
@@ -45,29 +33,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-        //konfiguracja nawigacji
-        val navMenu = binding.bottomNavigationView
-        val navController = findNavController(R.id.navFragment)
-        navMenu.setupWithNavController(navController)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.profileFragment))
-        setupActionBarWithNavController(navController)
-
-        //fragmenty w klasie main
-        //val HomeFragment = HomeFragment()
-        //val ProfileFragment = ProfileFragment()
-
-
-        //setCurrentFragment(HomeFragment) // ustawianie fragmentu bazowego
-
-        /*navMenu.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home->setCurrentFragment(HomeFragment)
-                R.id.person->setCurrentFragment(ProfileFragment)
-            }
-            true
-        }
-
+        /*
+        konfiguracja nawigacji
          */
+        val navMenu = binding.bottomNavigationView // przypisanie menuNawigacji(dolny panel)
+        val navController = findNavController(R.id.navFragment) // przypisanie navControllera
+        navMenu.setupWithNavController(navController) // "połączenie dolnej nawigacji z górną
+        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.profileFragment))
+        setupActionBarWithNavController(navController) // przypisuje nazwy "labeli" do górnego paska
+
+
     }
 
     // zmiana fragmentu
@@ -101,6 +76,9 @@ class MainActivity : AppCompatActivity() {
 
      */
 
+    /*
+    wylogowanie użytkownika
+     */
     private fun signOut() {
         auth.signOut()
         signOutUser()

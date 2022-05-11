@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toEndOf="@+id/mapLinearLayout"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -35,7 +35,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/mapLinearLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:gravity="center"

@@ -43,4 +43,20 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, "Error: " + it.message.toString())
             }
     }
+    fun updateUser(user: User){
+        val uid = auth.currentUser?.uid
+        cloud.collection("users")
+            .document(uid!!)
+            .update(mapOf(
+                "age" to user.age,
+                "name" to user.name,
+                "surname" to user.surname,
+                "phoneNumber" to user.phoneNumber,
+                "sex" to user.sex
+            )).addOnSuccessListener {
+                Log.d(REPO_DEBUG,"User added succesfully")
+            }.addOnFailureListener {
+                Log.d(REPO_DEBUG, "Error: " + it.message.toString())
+            }
+    }
 }

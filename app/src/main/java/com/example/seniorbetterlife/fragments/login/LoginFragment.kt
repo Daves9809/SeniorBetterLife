@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
-import com.example.seniorbetterlife.BaseFragment
+import com.example.seniorbetterlife.fragments.BaseFragment
 import com.example.seniorbetterlife.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
