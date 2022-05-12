@@ -59,4 +59,5 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, "Error: " + it.message.toString())
             }
     }
+
 }

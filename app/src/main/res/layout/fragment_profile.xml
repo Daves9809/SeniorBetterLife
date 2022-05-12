@@ -146,10 +146,24 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#FF0000FF" />
+
+    <TextView
+        android:id="@+id/tvSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Liczba kroków dzisiaj:"
+        android:textSize="20sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#FF0000FF" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -158,10 +172,12 @@
         android:gravity="center"
         android:layout_margin="20dp"
         android:textStyle="bold"/>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#FF0000FF" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

@@ -6,11 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.User
-import com.example.seniorbetterlife.data.repositories.FirebaseRepository
-import com.example.seniorbetterlife.databinding.FragmentHomeBinding
 import com.example.seniorbetterlife.databinding.FragmentProfileBinding
 
 
@@ -39,6 +35,10 @@ class ProfileFragment : Fragment() {
         profileViewModel.user.observe(viewLifecycleOwner) { user ->
             bindUserData(user)
         }
+        profileViewModel.updateSteps()
+        profileViewModel.steps.observe(viewLifecycleOwner) {steps ->
+            binding.tvSteps.setText("Liczba kroków wykonana dzisiaj: $steps")
+        }
     }
 
     private fun bindUserData(user: User) {
@@ -51,19 +51,19 @@ class ProfileFragment : Fragment() {
         binding.tvOcena.setText(user.rating.toString())
     }
 
+
     override fun onDestroyView() {
-        updateUser()
+        saveData()
         super.onDestroyView()
         _binding = null
     }
 
-    private fun updateUser() {
+    private fun saveData() {
         val name = binding.etName.text.toString()
         val surname = binding.etSurname.text.toString()
         val age = binding.etWiek.text.toString()
         val plec = binding.etPlec.text.toString()
         val number = binding.etNumber.text.toString()
-        val rating = binding.tvOcena.text.toString()
-        profileViewModel.updateUser(User(name = name, surname = surname, age = age, sex = plec, phoneNumber = number, rating = rating))
+        profileViewModel.updateUser(User(name = name, surname = surname, age = age, sex = plec, phoneNumber = number))
     }
 }

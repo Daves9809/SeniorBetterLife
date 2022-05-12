@@ -1,8 +1,14 @@
 package com.example.seniorbetterlife.profile
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.seniorbetterlife.activities.MainActivity
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
+import kotlinx.coroutines.launch
 
 class ProfileViewModel: ViewModel() {
 
@@ -10,5 +16,24 @@ class ProfileViewModel: ViewModel() {
 
     val user = repository.getUserData()
 
-    fun updateUser(user: User) { repository.updateUser(user) }
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            repository.updateUser(user)
+        }
+    }
+
+    private var stepsCount = 0
+
+    private val _stepsCount = MutableLiveData<String>("Liczba krokow: $stepsCount")
+
+    val steps: LiveData<String>
+        get() = _stepsCount
+
+
+    fun updateSteps() {
+        viewModelScope.launch {
+            _stepsCount.value = MainActivity.applicationContext()
+                .getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("key1",0).toString()
+        }
+    }
 }
