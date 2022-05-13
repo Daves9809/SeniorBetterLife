@@ -39,6 +39,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\maps', 'src\\main\\res\\main', 'src\\main\\res\\profile'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -50,16 +57,16 @@ dependencies {
 
     //Firebase Cloud
     implementation 'com.google.firebase:firebase-storage-ktx'
-    implementation 'com.google.firebase:firebase-firestore:24.1.0'
+    implementation 'com.google.firebase:firebase-firestore:24.1.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Glide - do wczytania zdjec, do wypelnienia
 
     //Navigation UI
     def nav_version = "2.3.1"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.4.2'
 
     //Lifecycle & Viewmodel
     def lifecycle_version = "2.2.0"

@@ -30,10 +30,8 @@ class ProfileViewModel: ViewModel() {
         get() = _stepsCount
 
 
-    fun updateSteps() {
-        viewModelScope.launch {
+    suspend fun updateSteps() {
             _stepsCount.value = MainActivity.applicationContext()
                 .getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("key1",0).toString()
-        }
     }
 }

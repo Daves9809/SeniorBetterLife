@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.databinding.FragmentProfileBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
@@ -35,7 +38,9 @@ class ProfileFragment : Fragment() {
         profileViewModel.user.observe(viewLifecycleOwner) { user ->
             bindUserData(user)
         }
-        profileViewModel.updateSteps()
+        viewLifecycleOwner.lifecycleScope.launch {
+            profileViewModel.updateSteps()
+        }
         profileViewModel.steps.observe(viewLifecycleOwner) {steps ->
             binding.tvSteps.setText("Liczba kroków wykonana dzisiaj: $steps")
         }

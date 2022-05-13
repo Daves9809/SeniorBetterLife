@@ -7,6 +7,7 @@ import com.example.seniorbetterlife.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.tasks.await
 
 class FirebaseRepository {
 
@@ -43,7 +44,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, "Error: " + it.message.toString())
             }
     }
-    fun updateUser(user: User){
+    suspend fun updateUser(user: User){
         val uid = auth.currentUser?.uid
         cloud.collection("users")
             .document(uid!!)

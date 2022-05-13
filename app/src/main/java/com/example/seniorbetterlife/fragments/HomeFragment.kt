@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
-import com.example.seniorbetterlife.R
-import com.example.seniorbetterlife.activities.MapsActivity
+import com.example.seniorbetterlife.maps.MapsActivity
 import com.example.seniorbetterlife.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -23,7 +21,7 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         binding.mapLinearLayout.setOnClickListener {
-            val intent = Intent(this.context,MapsActivity::class.java)
+            val intent = Intent(this.context, MapsActivity::class.java)
             startActivity(intent)
         }
 
