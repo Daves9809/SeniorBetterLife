@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.fragments.BaseFragment
@@ -19,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : BaseFragment() {
 
-    private val auth = FirebaseAuth.getInstance()
     private lateinit var binding: FragmentLoginBinding
     private val LOG_DEBUG = "LOG_DEBUG"
     //inicjacja referencji do elementow z xmla, aby nastepnie je zbindowac
@@ -44,19 +44,20 @@ class LoginFragment : BaseFragment() {
 
         setupLoginClick()
         setupRegistrationClick()
+        binding.pbLogin.isVisible = false
 
         viewModel.userSignUpStatus.observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Loading -> {
-                    // create progressBar = true
+                    binding.pbLogin.isVisible = true
                 }
                 is Resource.Success -> {
-                    // create progressBar = false
+                    binding.pbLogin.isVisible = false
                     Toast.makeText(this.context, "Login succesfully", Toast.LENGTH_SHORT).show()
                     startApp()
                 }
                 is Resource.Error -> {
-                    // create progressBar = false
+                    binding.pbLogin.isVisible = false
                     Toast.makeText(this.context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }

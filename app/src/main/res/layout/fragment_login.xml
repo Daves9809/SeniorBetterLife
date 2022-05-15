@@ -50,5 +50,12 @@
         android:text="Nie masz konta? Załóż je teraz"
         android:textColor="@color/white"
         android:textStyle="bold" />
+    <ProgressBar
+        android:id="@+id/pbLogin"
+        style="@android:style/Animation.Activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:progress="55" />
 
 </LinearLayout>

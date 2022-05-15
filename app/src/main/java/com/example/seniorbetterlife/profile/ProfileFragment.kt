@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.databinding.FragmentProfileBinding
-import kotlinx.coroutines.GlobalScope
+import com.example.seniorbetterlife.profile.util.Resource
 import kotlinx.coroutines.launch
 
 
@@ -20,7 +23,7 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val profileViewModel = ProfileViewModel()
+    private val viewModel = ProfileViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,22 +31,37 @@ class ProfileFragment : Fragment() {
     ): View? {
 
         _binding = FragmentProfileBinding.inflate(inflater,container,false)
-        val view = binding.root
-
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel.user.observe(viewLifecycleOwner) { user ->
-            bindUserData(user)
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            profileViewModel.updateSteps()
-        }
-        profileViewModel.steps.observe(viewLifecycleOwner) {steps ->
+        viewModel.getUserData()
+        viewModel.isUserDataAvailable.observe(viewLifecycleOwner, Observer { user ->
+            bindUserData(user!!)
+        })
+
+        viewModel.updateSteps()
+        viewModel.steps.observe(viewLifecycleOwner) { steps ->
             binding.tvSteps.setText("Liczba kroków wykonana dzisiaj: $steps")
         }
+
+
+        viewModel.userUpdateStatus.observe(viewLifecycleOwner, Observer {
+            when(it){
+                is Resource.Loading -> {
+                    //add progressBar = true
+                }
+                is Resource.Success -> {
+                    //add progressBar = false
+                    Toast.makeText(this.context, "Update succesfully", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Error -> {
+                    //add progressBar = false
+                    Toast.makeText(this.context, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun bindUserData(user: User) {
@@ -64,11 +82,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun saveData() {
-        val name = binding.etName.text.toString()
-        val surname = binding.etSurname.text.toString()
-        val age = binding.etWiek.text.toString()
-        val plec = binding.etPlec.text.toString()
-        val number = binding.etNumber.text.toString()
-        profileViewModel.updateUser(User(name = name, surname = surname, age = age, sex = plec, phoneNumber = number))
+            val name = binding.etName.text.toString()
+            val surname = binding.etSurname.text.toString()
+            val age = binding.etWiek.text.toString()
+            val plec = binding.etPlec.text.toString()
+            val number = binding.etNumber.text.toString()
+            viewModel.updateUser(User(name = name, surname = surname, age = age, sex = plec, phoneNumber = number))
     }
 }

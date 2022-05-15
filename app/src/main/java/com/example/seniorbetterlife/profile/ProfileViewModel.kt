@@ -1,51 +1,53 @@
 package com.example.seniorbetterlife.profile
 
-import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.seniorbetterlife.activities.MainActivity
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
+import com.example.seniorbetterlife.profile.util.Resource
+import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.*
 
 class ProfileViewModel: ViewModel() {
 
 
-    private val repository = FirebaseRepository()
+    private val firebaseRepository = FirebaseRepository()
 
-    val user = repository.getUserData()
-    val userr = MutableLiveData<User>()
+    //in activities we're going to observe status
+    private val _userUpdateStatus = MutableLiveData<Resource<Void>>()
+    val userUpdateStatus: LiveData<Resource<Void>> = _userUpdateStatus
 
-    /*var job: Job? = null
+    private val _isUserDataAvailable = MutableLiveData<User?>()
+    val isUserDataAvailable: LiveData<User?> = _isUserDataAvailable
 
-    fun getUserData() {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.getUserData()
-            withContext(Dispatchers.Main) {
-                userr.postValue(response.value)
-                Log.i("ProfileViewModel", userr.value.toString())
-            }
+    //val user = firebaseRepository.getUserData()
+
+    fun getUserData(){
+        viewModelScope.launch(Dispatchers.Main) {
+            val isDataAvailable = firebaseRepository.getUserData()
+            _isUserDataAvailable.postValue(isDataAvailable)
         }
     }
-     */
 
-    fun updateUser(user: User) {
-        viewModelScope.launch {
-            repository.updateUser(user)
+    fun updateUser(user: User){
+        _userUpdateStatus.postValue(Resource.Loading())
+
+        viewModelScope.launch(Dispatchers.Main) {
+            val updateUser = firebaseRepository.updateUser(user)
+            _userUpdateStatus.postValue(updateUser)
         }
     }
+
+
+
 
     private var stepsCount = 0
-
     private val _stepsCount = MutableLiveData<String>("Liczba krokow: $stepsCount")
-
     val steps: LiveData<String>
         get() = _stepsCount
 
-
-    suspend fun updateSteps() {
+    fun updateSteps() {
             _stepsCount.value = MainActivity.applicationContext()
                 .getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("key1",0).toString()
     }

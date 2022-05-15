@@ -23,20 +23,15 @@ class FirebaseRepository {
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
-    fun getUserData(): LiveData<User>{
-        val cloudResult = MutableLiveData<User>()
-        val uid = auth.currentUser?.uid // pobieranie uid aktualnego uzytkownika
+    suspend fun getUserData(): User? {
+        return withContext(Dispatchers.IO){
+                val uid = auth.currentUser?.uid // pobieranie uid aktualnego uzytkownika
 
-        cloud.collection("users") // pobieranie danych z chmury z kolekcji "users"
-            .document(uid!!) // z dokumenty z zaznaczeniem ze uid na ewno nie jest nullem
-            .get()
-            .addOnSuccessListener {
-                val user = it.toObject(User::class.java) // stworzenie z otrzymanych danych obiektu User
-                cloudResult.postValue(user!!)
-            }.addOnFailureListener {
-                Log.d(REPO_DEBUG,it.message.toString())
-            }
-        return cloudResult
+                val isDataAvailable = cloud.collection("users") // pobieranie danych z chmury z kolekcji "users"
+                    .document(uid!!) // z dokumenty z zaznaczeniem ze uid na ewno nie jest nullem
+                    .get().await()
+            isDataAvailable.toObject(User::class.java)
+        }
     }
 
     suspend fun addUserToAuthAndFirestore(user: User, password: String): Resource<AuthResult>{
@@ -64,21 +59,23 @@ class FirebaseRepository {
         }
     }
 
-    suspend fun updateUser(user: User){
-        val uid = auth.currentUser?.uid
-        cloud.collection("users")
-            .document(uid!!)
-            .update(mapOf(
-                "age" to user.age,
-                "name" to user.name,
-                "surname" to user.surname,
-                "phoneNumber" to user.phoneNumber,
-                "sex" to user.sex
-            )).addOnSuccessListener {
-                Log.d(REPO_DEBUG,"User added succesfully")
-            }.addOnFailureListener {
-                Log.d(REPO_DEBUG, "Error: " + it.message.toString())
+    suspend fun updateUser(user: User): Resource<Void>{
+        return withContext(Dispatchers.IO){
+            safeCall {
+                val uid = auth.currentUser?.uid
+                val updatingResult = cloud.collection("users")
+                    .document(uid!!)
+                    .update(mapOf(
+                        "age" to user.age,
+                        "name" to user.name,
+                        "surname" to user.surname,
+                        "phoneNumber" to user.phoneNumber,
+                        "sex" to user.sex
+                    )).await()
+                Resource.Success(updatingResult)
             }
+        }
+
     }
 
 }
