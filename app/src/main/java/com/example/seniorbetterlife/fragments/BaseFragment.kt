@@ -11,4 +11,5 @@ abstract class BaseFragment : Fragment() {
        }
        startActivity(intent)
    }
+
 }

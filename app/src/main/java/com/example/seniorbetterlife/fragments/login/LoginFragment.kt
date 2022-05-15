@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.fragments.BaseFragment
 import com.example.seniorbetterlife.databinding.FragmentLoginBinding
+import com.example.seniorbetterlife.profile.util.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -24,6 +27,7 @@ class LoginFragment : BaseFragment() {
     private lateinit var tvRegister: TextView
     private lateinit var editEmail: EditText
     private lateinit var editPassword: EditText
+    private val viewModel = RegLogViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +40,35 @@ class LoginFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindViews()
+
+        setupLoginClick()
+        setupRegistrationClick()
+
+        viewModel.userSignUpStatus.observe(viewLifecycleOwner, Observer {
+            when(it){
+                is Resource.Loading -> {
+                    // create progressBar = true
+                }
+                is Resource.Success -> {
+                    // create progressBar = false
+                    Toast.makeText(this.context, "Login succesfully", Toast.LENGTH_SHORT).show()
+                    startApp()
+                }
+                is Resource.Error -> {
+                    // create progressBar = false
+                    Toast.makeText(this.context, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun bindViews() {
         //bindowanie przyciskow do zmiennych
         tvRegister = binding.tvRegister
         btnLogin = binding.btnLogin
         editEmail = binding.editLoginEmail
         editPassword = binding.editPassword
-
-        setupLoginClick()
-        setupRegistrationClick()
     }
 
     private fun setupRegistrationClick() {
@@ -58,12 +83,7 @@ class LoginFragment : BaseFragment() {
         btnLogin.setOnClickListener {
             val email = editEmail.text.trim().toString()
             val password = editPassword.text.trim().toString()
-            auth.signInWithEmailAndPassword(email,password).addOnSuccessListener { authres ->
-                if(authres.user != null) startApp()
-            }.addOnFailureListener { exc ->
-                Snackbar.make(requireView(),"Something is no yes",Snackbar.LENGTH_SHORT).show()
-                Log.d(LOG_DEBUG, exc.message.toString())
-            }
+            viewModel.loginUser(email,password)
         }
 
     }

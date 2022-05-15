@@ -8,13 +8,28 @@ import androidx.lifecycle.*
 import com.example.seniorbetterlife.activities.MainActivity
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ProfileViewModel: ViewModel() {
+
 
     private val repository = FirebaseRepository()
 
     val user = repository.getUserData()
+    val userr = MutableLiveData<User>()
+
+    /*var job: Job? = null
+
+    fun getUserData() {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val response = repository.getUserData()
+            withContext(Dispatchers.Main) {
+                userr.postValue(response.value)
+                Log.i("ProfileViewModel", userr.value.toString())
+            }
+        }
+    }
+     */
 
     fun updateUser(user: User) {
         viewModelScope.launch {

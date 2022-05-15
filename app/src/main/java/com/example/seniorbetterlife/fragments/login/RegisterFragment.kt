@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.seniorbetterlife.fragments.BaseFragment
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.databinding.FragmentRegisterBinding
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
+import com.example.seniorbetterlife.profile.util.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -22,6 +25,7 @@ class RegisterFragment : BaseFragment() {
     private val auth = FirebaseAuth.getInstance()
     private val fbRepository = FirebaseRepository()
     private val REG_DEBUG = "REG_DEBUG"
+    private val viewModel = RegLogViewModel()
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding
@@ -49,6 +53,29 @@ class RegisterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bindViews()
+        setupSignUpClick()
+
+        viewModel.userRegistrationStatus.observe(viewLifecycleOwner, Observer {
+            when(it){
+                is Resource.Loading -> {
+                    // create progressBar = true
+                }
+                is Resource.Success -> {
+                    // create progressBar = false
+                    Toast.makeText(this.context, "Register succesfully",Toast.LENGTH_SHORT).show()
+                    startApp()
+                }
+                is Resource.Error -> {
+                    // create progressBar = false
+                    Toast.makeText(this.context, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        }
+
+    private fun bindViews() {
         //binding elements of view
         btnReg = binding.btnRegister
         email = binding.editRegEmail
@@ -56,10 +83,8 @@ class RegisterFragment : BaseFragment() {
         repeatPassword = binding.editRegRepeat
         ivSenior = binding.IVsenior
         ivJunior = binding.IVjunior
-
         isSenior = isSeniorOrJunior()
         changeColor(isSenior)
-        setupSignUpClick()
     }
 
 
@@ -83,62 +108,11 @@ class RegisterFragment : BaseFragment() {
             val emaill = email.text.toString()
             val pass = password.text.toString()
             val repeatPass = repeatPassword.text.toString()
-
-            if (checkInput(emaill, pass, repeatPass))
-                auth.createUserWithEmailAndPassword(emaill, pass)
-                    .addOnSuccessListener { authRes -> // adding user to Authentication Firebase
-                        if (authRes.user != null) {
-                            fbRepository.addUser(
-                                User(
-                                    auth.currentUser?.uid,
-                                    emaill,
-                                    isSenior = isSenior
-                                )
-                            ) // adding user to firebaseStore
-                            startApp() // starting mainActivity
-                        }
-                    }.addOnFailureListener { exc ->
-                    Snackbar.make(
-                        requireView(),
-                        "Ups.. Coś nie gra, $emaill, $pass",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    Log.d(REG_DEBUG, exc.message.toString())
-                }
+            viewModel.createUser(emaill,pass,repeatPass,isSenior)
 
         }
     }
 
-    private fun checkInput(email: String, password: String, repeatedPassword: String): Boolean {
-        if (password == repeatedPassword && password.toCharArray().count() >= 5 && email.contains(
-                '@'
-            )
-        )
-            return true
-        else if (password != repeatedPassword) {
-            Log.d(REG_DEBUG, "Hasło musi być takie samo")
-            Snackbar.make(
-                requireView(),
-                "Hasło musi być takie samo",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        } else if (password.toCharArray().count() <= 5) {
-            Log.d(REG_DEBUG, "Hasło musi składać się z 6 znaków")
-            Snackbar.make(
-                requireView(),
-                "Hasło musi składać się z 6 znaków",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        } else if (!email.contains('@')){
-            Log.d(REG_DEBUG, "Niepoprawny e-mail")
-            Snackbar.make(
-                requireView(),
-                "Niepoprawny e-mail",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
-        return false
-    }
 
     private fun isSeniorOrJunior(): Boolean {
         ivJunior.setOnClickListener {
