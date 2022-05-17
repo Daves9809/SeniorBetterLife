@@ -22,8 +22,8 @@
             <ImageView
                 android:padding="5dp"
                 android:id="@+id/ivSeniorJunior"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 tools:src="@tools:sample/avatars"
                 android:src="@drawable/ic_senior_128" />
                 <ImageView

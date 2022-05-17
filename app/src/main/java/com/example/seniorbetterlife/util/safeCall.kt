@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.profile.util
+package com.example.seniorbetterlife.util
 
 inline fun<T> safeCall(action: () -> Resource<T>): Resource<T>{
     return try {

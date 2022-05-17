@@ -1,16 +1,16 @@
 package com.example.seniorbetterlife.data.repositories
 
+import android.nfc.Tag
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.seniorbetterlife.data.User
-import com.example.seniorbetterlife.profile.util.Resource
-import com.example.seniorbetterlife.profile.util.safeCall
+import com.example.seniorbetterlife.maps.model.Place
+import com.example.seniorbetterlife.maps.model.UserMap
+import com.example.seniorbetterlife.util.Resource
+import com.example.seniorbetterlife.util.safeCall
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.okhttp.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -32,6 +32,15 @@ class FirebaseRepository {
                     .get().await()
             isDataAvailable.toObject(User::class.java)
         }
+    }
+    suspend fun getMapLocations(typeOfLocation: String): UserMap?{
+        return withContext(Dispatchers.IO){
+            val data = cloud.collection("userLocations")
+                .document(typeOfLocation)
+                .get().await()
+            data.toObject(UserMap::class.java)
+        }
+
     }
 
     suspend fun addUserToAuthAndFirestore(user: User, password: String): Resource<AuthResult>{
@@ -76,6 +85,14 @@ class FirebaseRepository {
             }
         }
 
+    }
+
+    fun sendUserMap(listOfPoint: List<UserMap>){
+        for (userMap in listOfPoint) {
+            cloud.collection("userLocations")
+                .document(userMap.title)
+                .set(userMap)
+        }
     }
 
 }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
-import com.example.seniorbetterlife.profile.util.Resource
+import com.example.seniorbetterlife.util.Resource
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

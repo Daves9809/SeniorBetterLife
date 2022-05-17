@@ -1,7 +1,6 @@
 package com.example.seniorbetterlife.fragments.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.fragments.BaseFragment
 import com.example.seniorbetterlife.databinding.FragmentLoginBinding
-import com.example.seniorbetterlife.profile.util.Resource
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
+import com.example.seniorbetterlife.util.Resource
 
 class LoginFragment : BaseFragment() {
 

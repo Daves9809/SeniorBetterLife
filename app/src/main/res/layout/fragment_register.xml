@@ -122,7 +122,7 @@
         android:textStyle="bold" />
 
     <ProgressBar
-        android:id="@+id/pbLogin"
+        android:id="@+id/pbRegister"
         style="@android:style/Animation.Activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

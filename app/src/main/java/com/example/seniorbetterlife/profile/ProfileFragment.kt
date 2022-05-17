@@ -1,5 +1,7 @@
 package com.example.seniorbetterlife.profile
 
+import android.graphics.BitmapFactory
+import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,13 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide.with
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.databinding.FragmentProfileBinding
-import com.example.seniorbetterlife.profile.util.Resource
-import kotlinx.coroutines.launch
+import com.example.seniorbetterlife.util.Resource
+import com.google.firebase.storage.FirebaseStorage
 
 
 class ProfileFragment : Fragment() {
@@ -25,12 +26,27 @@ class ProfileFragment : Fragment() {
 
     private val viewModel = ProfileViewModel()
 
+    //test
+    val storage = FirebaseStorage.getInstance()
+    val storageRef = storage.reference
+
+    // Create a reference with an initial file path and name
+    val pathReference = storageRef.child("images")
+    val reference = pathReference.child("lopata1.jpg")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentProfileBinding.inflate(inflater,container,false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        val imageView = binding.ivSeniorJunior
+
+        //test
+        with(this /* context */)
+            .load(reference)
+            .into(imageView)
+
         return binding.root
     }
 
@@ -48,7 +64,7 @@ class ProfileFragment : Fragment() {
 
 
         viewModel.userUpdateStatus.observe(viewLifecycleOwner, Observer {
-            when(it){
+            when (it) {
                 is Resource.Loading -> {
                     //add progressBar = true
                 }
@@ -65,7 +81,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun bindUserData(user: User) {
-        Log.d(PROFILE_DEBUG,user.toString())
+        Log.d(PROFILE_DEBUG, user.toString())
         binding.etName.setText(user.name)
         binding.etSurname.setText(user.surname)
         binding.etWiek.setText(user.age)
@@ -82,11 +98,40 @@ class ProfileFragment : Fragment() {
     }
 
     private fun saveData() {
-            val name = binding.etName.text.toString()
-            val surname = binding.etSurname.text.toString()
-            val age = binding.etWiek.text.toString()
-            val plec = binding.etPlec.text.toString()
-            val number = binding.etNumber.text.toString()
-            viewModel.updateUser(User(name = name, surname = surname, age = age, sex = plec, phoneNumber = number))
+        val name = binding.etName.text.toString()
+        val surname = binding.etSurname.text.toString()
+        val age = binding.etWiek.text.toString()
+        val plec = binding.etPlec.text.toString()
+        val number = binding.etNumber.text.toString()
+        viewModel.updateUser(
+            User(
+                name = name,
+                surname = surname,
+                age = age,
+                sex = plec,
+                phoneNumber = number
+            )
+        )
     }
+
+    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        // Raw height and width of image
+        val (height: Int, width: Int) = options.run { outHeight to outWidth }
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+
+        return inSampleSize
+    }
+
 }

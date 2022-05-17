@@ -5,8 +5,7 @@ import androidx.lifecycle.*
 import com.example.seniorbetterlife.activities.MainActivity
 import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
-import com.example.seniorbetterlife.profile.util.Resource
-import com.google.firebase.auth.AuthResult
+import com.example.seniorbetterlife.util.Resource
 import kotlinx.coroutines.*
 
 class ProfileViewModel: ViewModel() {
@@ -20,8 +19,6 @@ class ProfileViewModel: ViewModel() {
 
     private val _isUserDataAvailable = MutableLiveData<User?>()
     val isUserDataAvailable: LiveData<User?> = _isUserDataAvailable
-
-    //val user = firebaseRepository.getUserData()
 
     fun getUserData(){
         viewModelScope.launch(Dispatchers.Main) {

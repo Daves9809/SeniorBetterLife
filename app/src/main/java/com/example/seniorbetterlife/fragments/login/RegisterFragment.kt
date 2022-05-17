@@ -13,12 +13,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.seniorbetterlife.fragments.BaseFragment
 import com.example.seniorbetterlife.R
-import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.databinding.FragmentRegisterBinding
-import com.example.seniorbetterlife.data.repositories.FirebaseRepository
-import com.example.seniorbetterlife.profile.util.Resource
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
+import com.example.seniorbetterlife.util.Resource
 
 
 class RegisterFragment : BaseFragment() {
@@ -43,7 +39,7 @@ class RegisterFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
@@ -55,20 +51,20 @@ class RegisterFragment : BaseFragment() {
         bindViews()
         setupSignUpClick()
 
-        binding.pbLogin.isVisible = false
+        binding.pbRegister.isVisible = false
 
         viewModel.userRegistrationStatus.observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Loading -> {
-                    binding.pbLogin.isVisible = true
+                    binding.pbRegister.isVisible = true
                 }
                 is Resource.Success -> {
-                    binding.pbLogin.isVisible = false
+                    binding.pbRegister.isVisible = false
                     Toast.makeText(this.context, "Register succesfully",Toast.LENGTH_SHORT).show()
                     startApp()
                 }
                 is Resource.Error -> {
-                    binding.pbLogin.isVisible = false
+                    binding.pbRegister.isVisible = false
                     Toast.makeText(this.context, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
