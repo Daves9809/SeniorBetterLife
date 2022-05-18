@@ -31,9 +31,14 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
+            android:name=".helpPart.HelpActivity"
+            android:exported="false"
+            android:label="@string/title_activity_help"
+            android:process=":HelpActivity"/>
+        <activity
             android:name=".maps.MapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"/>
         <activity
             android:name=".activities.MainActivity"
             android:exported="false" />

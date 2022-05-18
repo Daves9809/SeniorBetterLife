@@ -18,10 +18,20 @@ class MapsViewModel: ViewModel() {
     private val _isUserMapDataAvailable = MutableLiveData<UserMap?>()
     val isUserDataAvailable: LiveData<UserMap?> = _isUserMapDataAvailable
 
-    fun getUserMaps(typeOfLocation: String){
+    private val _isUserMapsAvailable = MutableLiveData<List<UserMap>?>()
+    val isUserMapsAvailable: LiveData<List<UserMap>?> = _isUserMapsAvailable
+
+    fun getPointsOnMap(typeOfLocation: String){
         viewModelScope.launch(Dispatchers.Main){
             val isDataAvailable = firebaseRepository.getMapLocations(typeOfLocation)
             _isUserMapDataAvailable.postValue(isDataAvailable)
+        }
+    }
+
+    fun getUserMaps(){
+        viewModelScope.launch(Dispatchers.Main) {
+            val isDataAvailable = firebaseRepository.getListOfUserMaps()
+            _isUserMapsAvailable.postValue(isDataAvailable)
         }
     }
 }

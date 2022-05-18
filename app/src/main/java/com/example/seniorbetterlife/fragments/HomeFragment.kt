@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.seniorbetterlife.maps.MapsActivity
 import com.example.seniorbetterlife.databinding.FragmentHomeBinding
+import com.example.seniorbetterlife.helpPart.HelpActivity
 
 class HomeFragment : Fragment() {
 
@@ -22,6 +23,10 @@ class HomeFragment : Fragment() {
 
         binding.mapLinearLayout.setOnClickListener {
             val intent = Intent(this.context, MapsActivity::class.java)
+            startActivity(intent)
+        }
+        binding.helpLinearLayout.setOnClickListener {
+            val intent = Intent(this.context, HelpActivity::class.java)
             startActivity(intent)
         }
 

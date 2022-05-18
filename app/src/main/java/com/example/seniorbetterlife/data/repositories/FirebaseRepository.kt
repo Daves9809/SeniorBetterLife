@@ -95,4 +95,12 @@ class FirebaseRepository {
         }
     }
 
+    suspend fun getListOfUserMaps(): List<UserMap> {
+        return withContext(Dispatchers.IO){
+            val listOfUserMaps = cloud.collection("userLocations")
+                .get().await().toObjects(UserMap::class.java)
+            listOfUserMaps
+        }
+    }
+
 }

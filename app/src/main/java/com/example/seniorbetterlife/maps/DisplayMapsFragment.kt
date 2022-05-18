@@ -91,7 +91,7 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUserMaps(userMap.title)
+        viewModel.getPointsOnMap(userMap.title)
 
         viewModel.isUserDataAvailable.observe(viewLifecycleOwner) { userMap ->
             Log.d("Usermapa:", userMap!!.title)
@@ -127,7 +127,7 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
             val imageView = view.findViewById<ImageView>(R.id.badge)
 
             //setting link from firebase to load in picasso
-            val link = listOfPlaces.filter { it.title == marker.title }[0].urlOfGeopoint
+            val link = listOfPlaces.filter { it.description == marker.snippet }[0].urlOfGeopoint
             Log.d("listofplaces",link)
 
             //Setting image with Picasso
