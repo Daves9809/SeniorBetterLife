@@ -38,20 +38,9 @@ private const val TAG = "DisplayMapsFragment"
 class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
 
     private lateinit var userMap: UserMap
-    // Create a storage reference from our app
-    val fbRepository = FirebaseRepository()
-    private val cloud = FirebaseFirestore.getInstance()
 
     private val viewModel = MapsViewModel()
     private val listOfPlaces = mutableListOf<Place>()
-
-    //test
-    val storage = FirebaseStorage.getInstance()
-    val storageRef = storage.reference
-
-    // Create a reference with an initial file path and name
-    val pathReference = storageRef.child("images")
-    val reference = pathReference.child("lopata1.jpg")
 
 
     private val callback = OnMapReadyCallback { googleMap ->
