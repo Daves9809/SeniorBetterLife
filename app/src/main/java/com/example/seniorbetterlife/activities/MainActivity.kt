@@ -30,8 +30,6 @@ import java.util.*
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var auth: FirebaseAuth
-    private val fbRepository = FirebaseRepository()
-    private val cloud = FirebaseFirestore.getInstance()
     private val MAIN_DEBUG = "LOG_DEBUG"
 
     private var sensorManager: SensorManager? = null
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var binding: ActivityMainBinding
 
-    //tworzenie ogolno dostepnej ApplicationContext
+    //create global access for ApplicationContext
     init {
         instance = this
     }
@@ -63,16 +61,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-        /*
-        konfiguracja nawigacji
-         */
-        val navMenu = binding.bottomNavigationView // przypisanie menuNawigacji(dolny panel)
-        val navController = findNavController(R.id.navFragment) // przypisanie navControllera
-        navMenu.setupWithNavController(navController) // "połączenie dolnej nawigacji z górną
-        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.profileFragment))
-        setupActionBarWithNavController(navController) // przypisuje nazwy "labeli" do górnego paska
+        //navigation configure
+        configureNavigation()
 
-        //konfiguracja sensora
+        //sensor configure
+        sensorConfigure()
+
+    }
+
+    private fun sensorConfigure() {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if(ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
@@ -81,7 +78,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
                 1);
         }
+    }
 
+    private fun configureNavigation() {
+        val navMenu = binding.bottomNavigationView // przypisanie menuNawigacji(dolny panel)
+        val navController = findNavController(R.id.navFragment) // przypisanie navControllera
+        navMenu.setupWithNavController(navController) // "połączenie dolnej nawigacji z górną
+        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.profileFragment))
+        setupActionBarWithNavController(navController) // przypisuje nazwy "labeli" do górnego paska
     }
 
     override fun onResume() {

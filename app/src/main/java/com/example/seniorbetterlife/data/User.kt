@@ -12,5 +12,4 @@ data class User(
     val age: String? = null,
     val sex: String? = null,
     val phoneNumber: String? = null,
-    val steps:Int? = null,
-    val rating: String? = null)
+    val steps:Int? = null)

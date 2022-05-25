@@ -41,6 +41,7 @@ class AddTaskDialogFragment: DialogFragment() {
             dismiss()
         }
         rootView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            listener.onDialogNegativeClick(this)
             dismiss()
         }
 
@@ -48,7 +49,7 @@ class AddTaskDialogFragment: DialogFragment() {
         return rootView
     }
 
-    //check wheter ther interface was actually implemented by the parent activity/fragment
+    //check whether the interface was actually implemented by the parent activity/fragment
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try{

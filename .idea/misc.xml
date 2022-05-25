@@ -7,6 +7,7 @@
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/drawable/custom_info_contents.xml" value="0.215" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.215" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/drawable/ic_launcher_background.xml" value="0.194" />
+        <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/activity_help.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/activity_help_map.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/activity_login.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/activity_main.xml" value="0.29717180244829045" />
@@ -19,8 +20,12 @@
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_base.xml" value="0.1" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_blank.xml" value="0.3546195652173913" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_display_maps.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_help_part_maps.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_home.xml" value="0.29743589743589743" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_list.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_list_of_active_tasks.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_list_of_completed_tasks.xml" value="0.3009833262077811" />
+        <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_list_of_tasks.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_login.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_profile.xml" value="0.29717180244829045" />
         <entry key="..\:/Users/dejwid/AndroidStudioProjects/SeniorBetterLife/app/src/main/res/layout/fragment_register.xml" value="0.3605072463768116" />

@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
@@ -25,7 +27,7 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel = MapsViewModel()
+    private val viewModel: MapsViewModel by viewModels()
 
     //helper
     private val firebaseRepository = FirebaseRepository()
@@ -49,22 +51,26 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observingData()
 
+    }
+
+    private fun observingData() {
         viewModel.isUserMapsAvailable.observe(viewLifecycleOwner,
-            Observer { listofUserMaps ->
-                Log.d(LIST_FRAGMENT_DEBUG,listofUserMaps.toString())
-                binding.rvMaps.adapter = MapsAdapter(this.context, listofUserMaps!!, object: MapsAdapter.OnClickListener{
-                    override fun onItemClick(position: Int) {
-                        val myArgs = ListFragmentDirections.actionListFragmentToDisplayMapsFragment(position.toString()).actionId
-                        val bundle = bundleOf("userMap" to listofUserMaps[position])
-                        findNavController().navigate(myArgs,bundle)
-                        Log.d("ListFragment","item on position:$position clicked, title = ${listofUserMaps[position].title}")
-                    }
-                })
+        Observer { listofUserMaps ->
+            Log.d(LIST_FRAGMENT_DEBUG,listofUserMaps.toString())
+            binding.rvMaps.adapter = MapsAdapter(this.context, listofUserMaps!!, object: MapsAdapter.OnClickListener{
+                override fun onItemClick(position: Int) {
+                    val myArgs = ListFragmentDirections.actionListFragmentToDisplayMapsFragment(position.toString()).actionId
+                    val bundle = bundleOf("userMap" to listofUserMaps[position])
+                    findNavController().navigate(myArgs,bundle)
+                    Log.d("ListFragment","item on position:$position clicked, title = ${listofUserMaps[position].title}")
+                }
+            })
         })
     }
 
-    private fun generateSampleData(): List<UserMap> {
+    /*private fun generateSampleData(): List<UserMap> {
         return listOf(
             UserMap("Sport",
                 listOf(
@@ -100,6 +106,6 @@ class ListFragment : Fragment() {
             )
 
         )
-    }
+    }*/
 
 }

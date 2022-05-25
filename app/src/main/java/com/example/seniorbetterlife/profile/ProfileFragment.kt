@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide.with
 import com.example.seniorbetterlife.data.User
@@ -24,7 +25,7 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel = ProfileViewModel()
+    private val viewModel: ProfileViewModel by viewModels()
 
     //test
     val storage = FirebaseStorage.getInstance()
@@ -53,16 +54,17 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getUserData()
+        viewModel.updateSteps()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewModel.isUserDataAvailable.observe(viewLifecycleOwner, Observer { user ->
             bindUserData(user!!)
         })
-
-        viewModel.updateSteps()
         viewModel.steps.observe(viewLifecycleOwner) { steps ->
             binding.tvSteps.setText("Liczba kroków wykonana dzisiaj: $steps")
         }
-
-
         viewModel.userUpdateStatus.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
@@ -87,7 +89,6 @@ class ProfileFragment : Fragment() {
         binding.etWiek.setText(user.age)
         binding.etPlec.setText(user.sex)
         binding.etNumber.setText(user.phoneNumber)
-        binding.tvOcena.setText(user.rating.toString())
     }
 
 

@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seniorbetterlife.data.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.maps.model.UserMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MapsViewModel: ViewModel() {
 

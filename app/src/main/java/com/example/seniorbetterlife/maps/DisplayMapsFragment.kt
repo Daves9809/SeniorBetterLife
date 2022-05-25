@@ -10,12 +10,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.R
-import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.maps.model.Place
 import com.example.seniorbetterlife.maps.model.UserMap
-import com.example.seniorbetterlife.profile.ProfileViewModel
 import com.example.seniorbetterlife.util.MyImageRequestListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,8 +25,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
@@ -39,7 +37,7 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
 
     private lateinit var userMap: UserMap
 
-    private val viewModel = MapsViewModel()
+    private val viewModel: MapsViewModel by viewModels()
     private val listOfPlaces = mutableListOf<Place>()
 
 
@@ -81,15 +79,18 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPointsOnMap(userMap.title)
-
-        viewModel.isUserDataAvailable.observe(viewLifecycleOwner) { userMap ->
-            Log.d("Usermapa:", userMap!!.title)
-            //dodanie miejsc na mapie do listy
-            userMap.places.forEach { listOfPlaces.add(it) }
-        }
+        observeViewModel()
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    private fun observeViewModel() {
+        viewModel.isUserDataAvailable.observe(viewLifecycleOwner) { userMap ->
+        Log.d("Usermapa:", userMap!!.title)
+        //dodanie miejsc na mapie do listy
+        userMap.places.forEach { listOfPlaces.add(it) }
+    }
     }
 
 
