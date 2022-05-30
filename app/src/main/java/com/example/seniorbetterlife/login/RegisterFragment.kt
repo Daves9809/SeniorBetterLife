@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.fragments.login
+package com.example.seniorbetterlife.login
 
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import com.example.seniorbetterlife.fragments.BaseFragment
+import com.example.seniorbetterlife.main.BaseFragment
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.databinding.FragmentRegisterBinding
 import com.example.seniorbetterlife.util.Resource

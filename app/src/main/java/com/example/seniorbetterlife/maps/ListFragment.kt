@@ -9,16 +9,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.databinding.FragmentListBinding
-import com.example.seniorbetterlife.databinding.FragmentRegisterBinding
-import com.example.seniorbetterlife.fragments.login.LoginFragmentDirections
-import com.example.seniorbetterlife.maps.model.Place
-import com.example.seniorbetterlife.maps.model.UserMap
-import com.google.firebase.firestore.auth.User
 
 class ListFragment : Fragment() {
 
@@ -28,9 +22,6 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MapsViewModel by viewModels()
-
-    //helper
-    private val firebaseRepository = FirebaseRepository()
 
 
     override fun onCreateView(

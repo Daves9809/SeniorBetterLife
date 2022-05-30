@@ -1,9 +1,8 @@
 package com.example.seniorbetterlife.data.repositories
 
-import android.nfc.Tag
 import android.util.Log
-import com.example.seniorbetterlife.data.User
-import com.example.seniorbetterlife.maps.model.Place
+import com.example.seniorbetterlife.data.model.User
+import com.example.seniorbetterlife.helpPart.model.UserTask
 import com.example.seniorbetterlife.maps.model.UserMap
 import com.example.seniorbetterlife.util.Resource
 import com.example.seniorbetterlife.util.safeCall
@@ -17,9 +16,8 @@ import kotlinx.coroutines.withContext
 
 class FirebaseRepository {
 
-    private val REPO_DEBUG = "REPO_DEBUG"
+    private val TAG = "REPO_DEBUG"
 
-    private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
@@ -87,14 +85,6 @@ class FirebaseRepository {
 
     }
 
-    fun sendUserMap(listOfPoint: List<UserMap>){
-        for (userMap in listOfPoint) {
-            cloud.collection("userLocations")
-                .document(userMap.title)
-                .set(userMap)
-        }
-    }
-
     suspend fun getListOfUserMaps(): List<UserMap> {
         return withContext(Dispatchers.IO){
             val listOfUserMaps = cloud.collection("userLocations")
@@ -102,5 +92,65 @@ class FirebaseRepository {
             listOfUserMaps
         }
     }
+
+    suspend fun addUserTask(userTask: UserTask, dateWithTime: String) {
+        withContext(Dispatchers.IO){
+            cloud.collection("userTasks")
+                .document(userTask.user.email!!)
+                .get().addOnCompleteListener {
+                    if(!it.result.exists()){
+                        cloud.collection("userTasks")
+                            .document(userTask.user.email)
+                            .set(mapOf(("first" to "first")))
+                        cloud.collection("userTasks")
+                            .document(userTask.user.email)
+                            .collection("tasks")
+                            .document(dateWithTime)
+                            .set(userTask)
+                    }else{
+                        cloud.collection("userTasks")
+                            .document(userTask.user.email)
+                            .collection("tasks")
+                            .document(dateWithTime)
+                            .set(userTask)
+                    }
+                }.await()
+        }
+    }
+
+    suspend fun getUserTasks(email: String): List<UserTask>{
+        return withContext(Dispatchers.IO){
+            cloud.collection("userTasks")
+                .document(email)
+                .collection("tasks")
+                .get().await().toObjects(UserTask::class.java)
+        }
+    }
+
+    suspend fun deleteUserTask(userTask: UserTask) {
+        return withContext(Dispatchers.IO){
+            cloud.collection("userTasks")
+                .document(userTask.user.email!!)
+                .collection("tasks")
+                .document(userTask.date)
+                .delete()
+                .addOnSuccessListener {
+                    Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                }
+                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+        }
+    }
+
+    suspend fun setUserTaskToCompleted(userTask: UserTask) {
+        return withContext(Dispatchers.IO){
+            cloud.collection("userTasks")
+                .document(userTask.user.email!!)
+                .collection("tasks")
+                .document(userTask.date)
+                .update(mapOf("finished" to true))
+                .await()
+        }
+    }
+
 
 }

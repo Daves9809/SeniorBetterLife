@@ -1,11 +1,11 @@
-package com.example.seniorbetterlife.fragments.login
+package com.example.seniorbetterlife.login
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seniorbetterlife.data.User
+import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.util.Resource
 import com.google.firebase.auth.AuthResult

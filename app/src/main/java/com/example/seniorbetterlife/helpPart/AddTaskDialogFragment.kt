@@ -21,7 +21,7 @@ class AddTaskDialogFragment: DialogFragment() {
     private lateinit var  listener: DialogListener
 
     interface  DialogListener {
-        fun onDialogPositiveClick(kindOfHelp: String, phoneNumber: String)
+        fun onDialogPositiveClick(kindOfHelp: String)
         fun onDialogNegativeClick(dialog: DialogFragment)
     }
 
@@ -34,10 +34,9 @@ class AddTaskDialogFragment: DialogFragment() {
         var rootView: View = inflater.inflate(R.layout.fragment_add_task_dialog, container, false)
 
         val etProblem = rootView.findViewById<EditText>(R.id.etDescribeYourProblem)
-        val etPhoneNumber = rootView.findViewById<EditText>(R.id.etPhoneNumber)
 
         rootView.findViewById<Button>(R.id.btnSubmit).setOnClickListener {
-            listener.onDialogPositiveClick(etProblem.text.toString(),etPhoneNumber.text.toString())
+            listener.onDialogPositiveClick(etProblem.text.toString())
             dismiss()
         }
         rootView.findViewById<Button>(R.id.btnCancel).setOnClickListener {

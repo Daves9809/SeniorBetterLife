@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.activities
+package com.example.seniorbetterlife.main
 
 import android.Manifest
 import android.content.Context
@@ -8,6 +8,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -20,10 +21,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.seniorbetterlife.R
-import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.databinding.ActivityMainBinding
+import com.example.seniorbetterlife.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 
@@ -38,20 +38,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var previousTotalSteps = 0
 
     private lateinit var binding: ActivityMainBinding
-
-    //create global access for ApplicationContext
-    init {
-        instance = this
-    }
-
-    companion object {
-        private var instance: MainActivity? = null
-
-        fun applicationContext() : Context {
-            return instance!!.applicationContext
-        }
-    }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +54,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         sensorConfigure()
 
     }
+
 
     private fun sensorConfigure() {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager

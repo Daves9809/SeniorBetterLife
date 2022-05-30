@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardElevation="6dp"
+    app:cardCornerRadius="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zadanie ..."
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvOpis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTask"
+            android:text="Opis zadania:"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvOpis"
+            android:text="Test"
+            android:textSize="20sp"
+            android:textStyle="italic"/>
+        <TextView
+            android:id="@+id/tvStateOfTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDescription"
+            android:text="Stan zadania:"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tvStateOfTask">
+
+            <Button
+                android:id="@+id/btnTaskCompleted"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="Wykonane"
+                android:layout_weight="1"
+                android:backgroundTint="#3CE34D"
+                android:layout_margin="10dp"/>
+            <Button
+                android:id="@+id/btnResign"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="Zrezygnuj"
+                android:layout_weight="1"
+                android:backgroundTint="#FA0707"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

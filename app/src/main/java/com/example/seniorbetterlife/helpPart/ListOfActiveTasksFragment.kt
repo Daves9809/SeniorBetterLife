@@ -1,31 +1,33 @@
 package com.example.seniorbetterlife.helpPart
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.seniorbetterlife.data.model.User
+import com.example.seniorbetterlife.databinding.ActivityHelpBinding
 import com.example.seniorbetterlife.databinding.FragmentListOfActiveTasksBinding
-import com.example.seniorbetterlife.helpPart.model.UserAddress
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
+import com.example.seniorbetterlife.helpPart.adapters.ActiveTaskAdapter
+import com.example.seniorbetterlife.helpPart.adapters.CompletedTasksAdapter
+import com.example.seniorbetterlife.helpPart.model.UserTask
 
 
 class ListOfActiveTasksFragment : Fragment() {
 
     private var _binding: FragmentListOfActiveTasksBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SharedViewModel by activityViewModels()
 
-    lateinit var client: FusedLocationProviderClient
+    private val TAG = this.tag
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,79 +36,78 @@ class ListOfActiveTasksFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentListOfActiveTasksBinding.inflate(inflater,container,false)
 
-        val fab = binding.fabAddTask
-        fab.setOnClickListener {
-            val dialog = AddTaskDialogFragment()
+        onClickListeners()
+        // getting the recyclerview by its id
+        recyclerView = binding.recyclerView
 
-            dialog.show(childFragmentManager,"addTaskDialog")
+        // this creates a vertical layout Manager
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        }
-
-        //initialize location client
-        client = LocationServices.getFusedLocationProviderClient(activity)
+        //swipe refresher to updateListOfTasks
+        refreshApp()
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        getLastKnownLocation()
-
-    }
-
-    private fun getLastKnownLocation() {
-        checkLocationPermission()
-        client.lastLocation.addOnCompleteListener {
-            val latitude: Double? = it.result?.latitude
-            val longitude: Double? = it.result?.longitude
-            val pos = LatLng(latitude!!, longitude!!)
-            val geoCoder = Geocoder(requireContext())
-            val matches = geoCoder.getFromLocation(latitude, longitude, 1)
-            val userAddress: UserAddress = getUserAddress(matches)
-            val formattedUserAddress = formatUserAddress(userAddress)
-            Toast.makeText(context,"CurrentLocation: $formattedUserAddress", Toast.LENGTH_SHORT).show()
+    private fun refreshApp() {
+        binding.swipeToRefresh.setOnRefreshListener {
+            Toast.makeText(requireContext(),"Dane odświeżone!",Toast.LENGTH_SHORT).show()
+            binding.swipeToRefresh.isRefreshing = false
+            viewModel.getUserTasks(user.email!!)
         }
     }
 
-    private fun formatUserAddress(address: UserAddress): String {
-        return("${address.postalAddres}, ${address.locality}, ${address.street}")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
+        viewModel.getUserData()
     }
 
-    private fun getUserAddress(geoLocation: List<Address>): UserAddress {
-        val postalCode = geoLocation[0].postalCode
-        val locality = geoLocation[0].locality
-        val street = geoLocation[0].thoroughfare
-        return(UserAddress(postalCode,locality,street))
+    private fun observeData() {
+        //download user
+        viewModel.isUserDataAvailable.observe(viewLifecycleOwner, Observer {
+            //Declare tasks
+            user = it!!
+            viewModel.getUserTasks(it.email!!)
+
+        })
+
+        viewModel.isUserTaskRetrieved.observe(viewLifecycleOwner, Observer { listOfUserTasks ->
+            val listOfUserTaskss = listOfUserTasks as List<UserTask>
+            //filter for activeTasks
+            val listOfActiveTasks = listOfUserTaskss.filter { it.finished == false }
+
+            //bindowanie taskow do recyclerView
+            val adapter = ActiveTaskAdapter(listOfActiveTasks)
+            recyclerView.adapter = adapter
+
+            //buttons listeners
+            adapter.setOnItemClickListener(object : ActiveTaskAdapter.onItemClickListener{
+
+                override fun onPositiveButtonClick(position: Int) {
+                    viewModel.setUserTaskToCompleted(listOfActiveTasks[position])
+                    Toast.makeText(requireContext(),"Zadanie zostało ukończone",Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onNegativeButtonClick(position: Int) {
+                    //delete from firebase
+                    viewModel.deleteUserTask(listOfActiveTasks[position])
+                    Toast.makeText(requireContext(),"Zadanie zostało usunięte",Toast.LENGTH_SHORT).show()
+                }
+
+            })
+
+        })
+    }
+
+    private fun onClickListeners() {
+        val fab = binding.fabAddTask
+        fab.setOnClickListener {
+            val dialog = AddTaskDialogFragment()
+            dialog.show(parentFragmentManager,"addTaskDialog")
+        }
     }
 
 
-    private fun checkLocationPermission(): Boolean {
-        var state = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                state = true
-            } else {
-                requestPermissions(
-                    arrayOf(
-                        android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION
-                    ), 1
-                )
-            }
-
-        } else state = true
-        return state
-    }
-
-    companion object {
-        const val DEFAULT_ZOOM = 14.0F
-    }
 
 }

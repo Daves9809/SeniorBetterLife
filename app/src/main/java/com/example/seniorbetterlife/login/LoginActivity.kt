@@ -1,14 +1,11 @@
-package com.example.seniorbetterlife.activities
+package com.example.seniorbetterlife.login
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.AttributeSet
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.databinding.ActivityLoginBinding
+import com.example.seniorbetterlife.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {

@@ -2,8 +2,9 @@ package com.example.seniorbetterlife.profile
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.example.seniorbetterlife.activities.MainActivity
-import com.example.seniorbetterlife.data.User
+import com.example.seniorbetterlife.MyApplication
+import com.example.seniorbetterlife.main.MainActivity
+import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.util.Resource
 import kotlinx.coroutines.*
@@ -45,7 +46,7 @@ class ProfileViewModel: ViewModel() {
         get() = _stepsCount
 
     fun updateSteps() {
-            _stepsCount.value = MainActivity.applicationContext()
+            _stepsCount.value = MyApplication.getContext()
                 .getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("key1",0).toString()
     }
 }

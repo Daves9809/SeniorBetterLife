@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.fragments
+package com.example.seniorbetterlife.main
 
 import android.content.Intent
 import android.os.Bundle

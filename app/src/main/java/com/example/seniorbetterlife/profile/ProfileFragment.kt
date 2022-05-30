@@ -1,7 +1,8 @@
 package com.example.seniorbetterlife.profile
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,10 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide.with
-import com.example.seniorbetterlife.data.User
+import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.databinding.FragmentProfileBinding
 import com.example.seniorbetterlife.util.Resource
 import com.google.firebase.storage.FirebaseStorage
@@ -56,6 +58,18 @@ class ProfileFragment : Fragment() {
         viewModel.getUserData()
         viewModel.updateSteps()
         observeViewModel()
+        onClickListeners()
+    }
+
+    private fun onClickListeners() {
+        binding.btnSave.setOnClickListener {
+            requestPermissions(
+                arrayOf(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 1
+            )
+        }
     }
 
     private fun observeViewModel() {
