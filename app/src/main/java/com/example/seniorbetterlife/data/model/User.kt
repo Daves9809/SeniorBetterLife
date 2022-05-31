@@ -8,7 +8,7 @@ data class User(
     val email: String? = null,
     val name: String? = null,
     val surname: String? = null,
-    val isSenior: Boolean = true,
+    val senior: Boolean = true,
     val age: String? = null,
     val sex: String? = null,
     val phoneNumber: String? = null,

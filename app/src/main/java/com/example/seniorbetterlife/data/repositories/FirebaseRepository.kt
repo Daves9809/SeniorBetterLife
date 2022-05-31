@@ -2,14 +2,13 @@ package com.example.seniorbetterlife.data.repositories
 
 import android.util.Log
 import com.example.seniorbetterlife.data.model.User
-import com.example.seniorbetterlife.helpPart.model.UserTask
-import com.example.seniorbetterlife.maps.model.UserMap
+import com.example.seniorbetterlife.senior.helpPart.model.UserTask
+import com.example.seniorbetterlife.senior.maps.model.UserMap
 import com.example.seniorbetterlife.util.Resource
 import com.example.seniorbetterlife.util.safeCall
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -93,6 +92,20 @@ class FirebaseRepository {
         }
     }
 
+    suspend fun getListOfUserEmails(): List<String>{
+        return withContext(Dispatchers.IO){
+            val listOfUserEmails = mutableListOf<String>()
+            val listOfListOfUserTasks = mutableListOf<List<UserTask>>()
+            cloud.collection("userTasks")
+                .get().addOnSuccessListener { result ->
+                    for (document in result){
+                        listOfUserEmails.add(document.id)
+                    }
+                }.await()
+            listOfUserEmails
+        }
+    }
+
     suspend fun addUserTask(userTask: UserTask, dateWithTime: String) {
         withContext(Dispatchers.IO){
             cloud.collection("userTasks")
@@ -148,6 +161,17 @@ class FirebaseRepository {
                 .collection("tasks")
                 .document(userTask.date)
                 .update(mapOf("finished" to true))
+                .await()
+        }
+    }
+
+    suspend fun updateUserTask(userTask: UserTask, volunteer: User?){
+        return withContext(Dispatchers.IO){
+            cloud.collection("userTasks")
+                .document(userTask.user.email!!)
+                .collection("tasks")
+                .document(userTask.date)
+                .update(mapOf("volunteer" to volunteer))
                 .await()
         }
     }
