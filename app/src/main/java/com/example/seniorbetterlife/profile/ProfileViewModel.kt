@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.senior.profile
+package com.example.seniorbetterlife.profile
 
 import android.content.Context
 import androidx.lifecycle.*

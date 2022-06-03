@@ -1,6 +1,7 @@
 package com.example.seniorbetterlife.data.repositories
 
 import android.util.Log
+import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.senior.helpPart.model.UserTask
 import com.example.seniorbetterlife.senior.maps.model.UserMap
@@ -8,6 +9,7 @@ import com.example.seniorbetterlife.util.Resource
 import com.example.seniorbetterlife.util.safeCall
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -20,18 +22,21 @@ class FirebaseRepository {
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
-    suspend fun getUserData(): User? {
-        return withContext(Dispatchers.IO){
-                val uid = auth.currentUser?.uid // pobieranie uid aktualnego uzytkownika
 
-                val isDataAvailable = cloud.collection("users") // pobieranie danych z chmury z kolekcji "users"
+    suspend fun getUserData(): User? {
+        return withContext(Dispatchers.IO) {
+            val uid = auth.currentUser?.uid // pobieranie uid aktualnego uzytkownika
+
+            val isDataAvailable =
+                cloud.collection("users") // pobieranie danych z chmury z kolekcji "users"
                     .document(uid!!) // z dokumenty z zaznaczeniem ze uid na ewno nie jest nullem
                     .get().await()
             isDataAvailable.toObject(User::class.java)
         }
     }
-    suspend fun getMapLocations(typeOfLocation: String): UserMap?{
-        return withContext(Dispatchers.IO){
+
+    suspend fun getMapLocations(typeOfLocation: String): UserMap? {
+        return withContext(Dispatchers.IO) {
             val data = cloud.collection("userLocations")
                 .document(typeOfLocation)
                 .get().await()
@@ -40,44 +45,47 @@ class FirebaseRepository {
 
     }
 
-    suspend fun addUserToAuthAndFirestore(user: User, password: String): Resource<AuthResult>{
-        return withContext(Dispatchers.IO){
+    suspend fun addUserToAuthAndFirestore(user: User, password: String): Resource<AuthResult> {
+        return withContext(Dispatchers.IO) {
             safeCall {
                 //add user to auth
-                val registrationResult = auth.createUserWithEmailAndPassword(user.email!!,password).await()
+                val registrationResult =
+                    auth.createUserWithEmailAndPassword(user.email!!, password).await()
                 val uid = auth.currentUser?.uid // pobieranie uid aktualnego uzytkownika
                 //add user to firestore
                 cloud.collection("users")
                     .document(uid!!)
-                    .set(user).await()
+                    .set(User(uid = uid, email = user.email, senior = user.senior)).await()
                 Resource.Success(registrationResult)
             }
         }
 
     }
 
-    suspend fun loginUser(email: String, password: String): Resource<AuthResult>{
-        return withContext(Dispatchers.IO){
+    suspend fun loginUser(email: String, password: String): Resource<AuthResult> {
+        return withContext(Dispatchers.IO) {
             safeCall {
-                val loginResult = auth.signInWithEmailAndPassword(email,password).await()
+                val loginResult = auth.signInWithEmailAndPassword(email, password).await()
                 Resource.Success(loginResult)
             }
         }
     }
 
-    suspend fun updateUser(user: User): Resource<Void>{
-        return withContext(Dispatchers.IO){
+    suspend fun updateUser(user: User): Resource<Void> {
+        return withContext(Dispatchers.IO) {
             safeCall {
                 val uid = auth.currentUser?.uid
                 val updatingResult = cloud.collection("users")
                     .document(uid!!)
-                    .update(mapOf(
-                        "age" to user.age,
-                        "name" to user.name,
-                        "surname" to user.surname,
-                        "phoneNumber" to user.phoneNumber,
-                        "sex" to user.sex
-                    )).await()
+                    .update(
+                        mapOf(
+                            "age" to user.age,
+                            "name" to user.name,
+                            "surname" to user.surname,
+                            "phoneNumber" to user.phoneNumber,
+                            "sex" to user.sex
+                        )
+                    ).await()
                 Resource.Success(updatingResult)
             }
         }
@@ -85,20 +93,20 @@ class FirebaseRepository {
     }
 
     suspend fun getListOfUserMaps(): List<UserMap> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val listOfUserMaps = cloud.collection("userLocations")
                 .get().await().toObjects(UserMap::class.java)
             listOfUserMaps
         }
     }
 
-    suspend fun getListOfUserEmails(): List<String>{
-        return withContext(Dispatchers.IO){
+    suspend fun getListOfUserEmails(): List<String> {
+        return withContext(Dispatchers.IO) {
             val listOfUserEmails = mutableListOf<String>()
             val listOfListOfUserTasks = mutableListOf<List<UserTask>>()
             cloud.collection("userTasks")
                 .get().addOnSuccessListener { result ->
-                    for (document in result){
+                    for (document in result) {
                         listOfUserEmails.add(document.id)
                     }
                 }.await()
@@ -107,11 +115,11 @@ class FirebaseRepository {
     }
 
     suspend fun addUserTask(userTask: UserTask, dateWithTime: String) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             cloud.collection("userTasks")
                 .document(userTask.user.email!!)
                 .get().addOnCompleteListener {
-                    if(!it.result.exists()){
+                    if (!it.result.exists()) {
                         cloud.collection("userTasks")
                             .document(userTask.user.email)
                             .set(mapOf(("first" to "first")))
@@ -120,7 +128,7 @@ class FirebaseRepository {
                             .collection("tasks")
                             .document(dateWithTime)
                             .set(userTask)
-                    }else{
+                    } else {
                         cloud.collection("userTasks")
                             .document(userTask.user.email)
                             .collection("tasks")
@@ -131,8 +139,8 @@ class FirebaseRepository {
         }
     }
 
-    suspend fun getUserTasks(email: String): List<UserTask>{
-        return withContext(Dispatchers.IO){
+    suspend fun getUserTasks(email: String): List<UserTask> {
+        return withContext(Dispatchers.IO) {
             cloud.collection("userTasks")
                 .document(email)
                 .collection("tasks")
@@ -141,7 +149,7 @@ class FirebaseRepository {
     }
 
     suspend fun deleteUserTask(userTask: UserTask) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             cloud.collection("userTasks")
                 .document(userTask.user.email!!)
                 .collection("tasks")
@@ -155,7 +163,7 @@ class FirebaseRepository {
     }
 
     suspend fun setUserTaskToCompleted(userTask: UserTask) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             cloud.collection("userTasks")
                 .document(userTask.user.email!!)
                 .collection("tasks")
@@ -165,8 +173,8 @@ class FirebaseRepository {
         }
     }
 
-    suspend fun updateUserTask(userTask: UserTask, volunteer: User?){
-        return withContext(Dispatchers.IO){
+    suspend fun updateUserTask(userTask: UserTask, volunteer: User?) {
+        return withContext(Dispatchers.IO) {
             cloud.collection("userTasks")
                 .document(userTask.user.email!!)
                 .collection("tasks")
@@ -174,6 +182,15 @@ class FirebaseRepository {
                 .update(mapOf("volunteer" to volunteer))
                 .await()
         }
+    }
+
+    suspend fun updateUserDailySteps(user: User, dailySteps: List<DailySteps?>) {
+
+        cloud.collection("users")
+            .document(user.uid!!)
+            .update(mapOf("dailySteps" to dailySteps))
+            .await()
+
     }
 
 

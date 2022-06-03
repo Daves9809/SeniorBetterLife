@@ -1,18 +1,25 @@
 package com.example.seniorbetterlife
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.seniorbetterlife.data.access.MyDatabase
+import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
+import com.example.seniorbetterlife.data.repositories.RoomRepository
 import com.example.seniorbetterlife.senior.helpPart.model.UserTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel: ViewModel() {
+class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val firebaseRepository = FirebaseRepository()
+    private val roomRepository: RoomRepository
+
+    init {
+        val myDataDao = MyDatabase.getDatabase(application).myDataDao()
+        roomRepository = RoomRepository(myDataDao)
+    }
 
     private val _user = MutableLiveData<User?>()
     val user: LiveData<User?> = _user
@@ -22,6 +29,9 @@ class MainViewModel: ViewModel() {
 
     private val _usersEmail = MutableLiveData<List<String>>()
     val userEmails: LiveData<List<String>> = _usersEmail
+
+    private val _dailySteps = MutableLiveData<List<DailySteps?>>()
+    val dailySteps: LiveData<List<DailySteps?>> = _dailySteps
 
 
     fun loadUser() {
@@ -47,6 +57,33 @@ class MainViewModel: ViewModel() {
     fun updateUserTask(userTask: UserTask, volunteer: User){
         viewModelScope.launch(Dispatchers.Main) {
             firebaseRepository.updateUserTask(userTask, volunteer)
+        }
+    }
+    fun saveDailySteps(user: User, dailySteps: List<DailySteps?>){
+        viewModelScope.launch(Dispatchers.Main) {
+            firebaseRepository.updateUserDailySteps(user, dailySteps)
+        }
+    }
+
+    fun setRoomDailySteps(listOfDailySteps: List<DailySteps?>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if(listOfDailySteps.isNotEmpty()){
+                for(dailySteps in listOfDailySteps){
+                    roomRepository.addDailySteps(dailySteps!!)
+                }
+            }
+        }
+    }
+    fun getDailySteps() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val listOfDailySteps = roomRepository.getDailySteps()
+            _dailySteps.postValue(listOfDailySteps)
+        }
+    }
+
+    fun clearLocalDatabase() {
+        viewModelScope.launch(Dispatchers.IO) {
+            roomRepository.clearDatabase()
         }
     }
 }

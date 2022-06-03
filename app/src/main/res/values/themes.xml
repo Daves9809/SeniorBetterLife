@@ -30,5 +30,12 @@
         <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.Positive</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.Negative</item>
     </style>
+    <style name="Theme.SeniorBetterLife.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.SeniorBetterLife.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.SeniorBetterLife.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

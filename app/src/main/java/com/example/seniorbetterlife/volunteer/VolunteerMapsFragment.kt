@@ -24,8 +24,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class VolunteerMapsFragment : Fragment(), GoogleMap.OnMapClickListener,
-    GoogleMap.OnInfoWindowClickListener {
+class VolunteerMapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
 
     private val viewModel: MainViewModel by activityViewModels()
     private val listOfUserTasks = mutableListOf<UserTask>()
@@ -52,7 +51,6 @@ class VolunteerMapsFragment : Fragment(), GoogleMap.OnMapClickListener,
                 addMarker(googleMap, listOfUserTasks)
             }
         })
-        googleMap.setOnMapClickListener(this)
         googleMap.setOnInfoWindowClickListener(this)
     }
 
@@ -95,11 +93,6 @@ class VolunteerMapsFragment : Fragment(), GoogleMap.OnMapClickListener,
             )
         }
     }
-
-    override fun onMapClick(p0: LatLng) {
-        Toast.makeText(requireContext(), "tapped, point = $p0", Toast.LENGTH_SHORT).show()
-    }
-
 
     override fun onInfoWindowClick(p0: Marker) {
         //create dialog

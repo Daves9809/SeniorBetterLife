@@ -8,7 +8,7 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/PillReminderLinearLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:gravity="center"
@@ -41,10 +41,10 @@
         android:gravity="center"
         android:orientation="vertical"
         android:background="#9DB5C8"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/PillReminderLinearLayout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="@+id/PillReminderLinearLayout">
 
         <ImageView
             android:id="@+id/ivMap"
@@ -64,7 +64,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/PedometerLinearLayout"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:gravity="center"
@@ -99,8 +99,8 @@
         android:orientation="vertical"
         android:background="#9DB5C8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintEnd_toEndOf="@+id/PillReminderLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/PillReminderLinearLayout">
 
         <ImageView
             android:id="@+id/imageView4"

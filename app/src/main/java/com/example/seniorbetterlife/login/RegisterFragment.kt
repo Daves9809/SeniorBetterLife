@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.senior.login
+package com.example.seniorbetterlife.login
 
 import android.os.Bundle
 import android.util.Log

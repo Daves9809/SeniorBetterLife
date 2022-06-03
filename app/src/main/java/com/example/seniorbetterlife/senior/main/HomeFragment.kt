@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.senior.maps.MapsActivity
 import com.example.seniorbetterlife.databinding.FragmentHomeBinding
 import com.example.seniorbetterlife.senior.helpPart.HelpActivity
 import com.example.seniorbetterlife.senior.helpPart.model.UserTask
+import com.example.seniorbetterlife.util.Constants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class HomeFragment : Fragment() {
@@ -21,16 +25,12 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var currentUser: User
-    private lateinit var userTasks: List<UserTask>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
-
         onClickListeners()
 
         return view
@@ -48,9 +48,14 @@ class HomeFragment : Fragment() {
                 user.email?.let { viewModel.getUserTasks(it) }
         })
         viewModel.userTasks.observe(viewLifecycleOwner, Observer { listOfUserTasks ->
-            val userTask = listOfUserTasks.filter { it?.finished == false }.filter { it?.volunteer != null }[0]
-            if (userTask != null)
-                createDialog(userTask)
+            if(listOfUserTasks.isNotEmpty() ){
+                val userTasks = listOfUserTasks.filter { it?.finished == false }.filter { it!!.volunteer != null }
+                if (userTasks.isNotEmpty()){
+                    val userTask = userTasks[0]
+                    if(userTask != null)
+                        createDialog(userTask)
+                }
+            }
         })
     }
 
@@ -79,13 +84,18 @@ class HomeFragment : Fragment() {
 
     private fun onClickListeners() {
         binding.mapLinearLayout.setOnClickListener {
-            val intent = Intent(this.context, MapsActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMapsActivity().actionId)
         }
         binding.helpLinearLayout.setOnClickListener {
-            val intent = Intent(this.context, HelpActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToHelpActivity().actionId)
         }
+        binding.PedometerLinearLayout.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPedometerActivity().actionId)
+        }
+        binding.PillReminderLinearLayout.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPillReminder().actionId)
+        }
+
     }
 
     override fun onDestroyView() {

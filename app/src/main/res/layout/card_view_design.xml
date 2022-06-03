@@ -48,7 +48,7 @@
             android:textStyle="bold"
             android:gravity="center"/>
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/PillReminderLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
