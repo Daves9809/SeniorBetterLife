@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -96,6 +97,8 @@ class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
             val latitude: Double? = it.result?.latitude
             val longitude: Double? = it.result?.longitude
             val geoCoder = Geocoder(this)
+            Log.d("geocoder",geoCoder.toString())
+            Log.d("geocoder","$latitude,$longitude")
             val matches = geoCoder.getFromLocation(latitude!!, longitude!!, 1)
             userAddress = userAddressHelper.getUserAddressFromGeoLocation(matches)
         }.addOnSuccessListener {

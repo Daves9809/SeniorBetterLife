@@ -21,4 +21,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="countOfSteps">Liczba kroków</string>
+    <string name="achievedDistance">Pokonany dystans:</string>
+    <string name="burned_calories">Spalone kalorie</string>
+    <string name="daily_progress">Dzienny postęp</string>
+    <string name="history_of_steps">Historia aktywności:</string>
+    <string name="find_help">Znajdź Pomoc</string>
+    <string name="tvVolunteer">Wolontariusz</string>
+    <string name="tvSenior">Senior</string>
 </resources>

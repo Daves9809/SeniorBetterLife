@@ -5,9 +5,12 @@ import androidx.lifecycle.LiveData
 import com.example.seniorbetterlife.data.access.MyDataDao
 import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
+import kotlinx.coroutines.flow.Flow
 
 
 class RoomRepository(private val myDataDao: MyDataDao) {
+
+    val listOfDailySteps: Flow<List<DailySteps>> = myDataDao.getAllDailySteps()
 
     suspend fun getDailySteps(): List<DailySteps?>{
         Log.d("RoomRepository","GetDailySteps")

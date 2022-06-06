@@ -41,9 +41,6 @@ class VolunteerMapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         viewModel.usersTasks.observe(viewLifecycleOwner, Observer { userTasks ->
             for (userTask in userTasks) {
                 if (!userTask.finished)
@@ -96,7 +93,7 @@ class VolunteerMapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
 
     override fun onInfoWindowClick(p0: Marker) {
         //create dialog
-        val userTask = listOfUserTasks.filter { it.description == p0.snippet && it.userAddress.lattitude == p0.position.latitude }.get(0)
+        val userTask = listOfUserTasks.filter { it.description == p0.snippet && it.userAddress.lattitude == p0.position.latitude }[0]
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Pomoc dla ${userTask.user.name + " " + userTask.user.surname}")
             .setMessage(

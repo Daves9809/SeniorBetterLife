@@ -6,50 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".senior.main.HomeFragment">
 
+    <View
+        android:id="@+id/homeVerticalLine"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/homeHorizontalLine"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
         android:id="@+id/PillReminderLinearLayout"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
         android:background="#9DB5C8"
-        app:layout_constraintBottom_toTopOf="@+id/helpLinearLayout"
+        app:layout_constraintTop_toBottomOf="@id/homeVerticalLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/homeHorizontalLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mapLinearLayout"
-        app:layout_constraintTop_toTopOf="parent">
+
+        >
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/ic_learn" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Warsztaty"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/mapLinearLayout"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
         android:background="#9DB5C8"
-        app:layout_constraintEnd_toStartOf="@+id/PillReminderLinearLayout"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/PillReminderLinearLayout">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/homeHorizontalLine"
+        app:layout_constraintBottom_toTopOf="@id/homeVerticalLine">
 
         <ImageView
             android:id="@+id/ivMap"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:src="@drawable/ic_google_map"
             tools:layout_editor_absoluteX="74dp"
             tools:layout_editor_absoluteY="154dp" />
@@ -59,62 +79,65 @@
             android:layout_height="wrap_content"
             android:text="Aktywny senior"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:gravity="center"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/PedometerLinearLayout"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
         android:background="#9DB5C8"
-        app:layout_constraintEnd_toStartOf="@+id/helpLinearLayout"
+        app:layout_constraintTop_toBottomOf="@id/homeVerticalLine"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/helpLinearLayout">
+        app:layout_constraintEnd_toStartOf="@id/homeHorizontalLine">
 
         <ImageView
             android:id="@+id/ivDiet"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_diet"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_footstep"
             tools:layout_editor_absoluteX="213dp"
             tools:layout_editor_absoluteY="154dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ciekawostki dietetyczne"
+            android:text="Licznik kroków"
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/helpLinearLayout"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
         android:background="#9DB5C8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/PillReminderLinearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/PillReminderLinearLayout">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/homeHorizontalLine"
+        app:layout_constraintBottom_toTopOf="@id/homeVerticalLine">
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/ic_help" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pomoc"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="@string/find_help"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

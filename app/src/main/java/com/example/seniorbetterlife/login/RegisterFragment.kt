@@ -114,7 +114,7 @@ class RegisterFragment : BaseFragment() {
     private fun isSeniorOrJunior(): Boolean {
         ivJunior.setOnClickListener {
             isSenior = false
-            Log.d(REG_DEBUG, "User is junior")
+            Log.d(REG_DEBUG, "User is volunteer")
             changeColor(isSenior)
         }
         ivSenior.setOnClickListener {

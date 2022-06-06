@@ -21,6 +21,7 @@ import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.repositories.RoomRepository
 import com.example.seniorbetterlife.util.Constants
 import com.example.seniorbetterlife.util.DateFormatter
+import com.example.seniorbetterlife.util.SettingPrefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -39,10 +40,17 @@ class PedometerService : Service(), SensorEventListener {
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     private var isUserRelogged: Boolean = false
+    private var isDeviceRebooted: Boolean = false
     private var oldSteps: Int = 0
     private var stepsAfterLogin by Delegates.notNull<Int>()
+    private val settingPrefs = SettingPrefs(context = this)
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int
+    ): Int {// At the top level of your kotlin file:
         if (intent!!.action.equals(Constants.ACTION_START_FOREGROUND_ACTION)) {
             dao = MyDatabase.getDatabase(this).myDataDao()
             roomRepository = RoomRepository(dao!!)
@@ -87,15 +95,15 @@ class PedometerService : Service(), SensorEventListener {
                     val listOfDailySteps = roomRepository!!.getDailySteps()
                     if (listOfDailySteps.isNotEmpty()) {
                         val dailySteps = listOfDailySteps.filter { it!!.day == currentDate }
-                        if(dailySteps.isNotEmpty()){
+                        if (dailySteps.isNotEmpty()) {
                             val currentDailySteps = dailySteps[0]
-                                Log.d(
-                                    "PedometerService",
-                                    "DailySteps from currentDay =  ${currentDailySteps!!.steps}"
-                                )
-                                oldSteps = currentDailySteps.steps
+                            Log.d(
+                                "PedometerService",
+                                "DailySteps from currentDay =  ${currentDailySteps!!.steps}"
+                            )
+                            oldSteps = currentDailySteps.steps
 
-                        }else {
+                        } else {
                             initializeNewRow(currentDate)
                         }
                     } else {
@@ -103,13 +111,15 @@ class PedometerService : Service(), SensorEventListener {
                     }
                 }
                 isUserRelogged = false
+
             } else {
                 currentSteps = oldSteps + (stepsSinceReboot.toInt() - stepsAfterLogin)
                 Log.d("PedometerService", "User was loggedIn")
                 scope.launch {
-                    roomRepository!!.updateSteps(DailySteps(currentDate , currentSteps))
+                    roomRepository!!.updateSteps(DailySteps(currentDate, currentSteps))
                 }
-                notificationBuilder.setContentText("Today's count of steps: PedometerService").build()
+                notificationBuilder.setContentText("Today's count of steps: $currentSteps")
+                    .build()
                 startForeground(Constants.NOTIFICATION_ID, notificationBuilder.build())
             }
         }

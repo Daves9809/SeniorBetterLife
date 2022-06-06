@@ -1,23 +1,25 @@
 package com.example.seniorbetterlife.pedometer
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.example.seniorbetterlife.MyApplication
+import com.example.seniorbetterlife.data.access.MyDatabase
 import com.example.seniorbetterlife.data.model.DailySteps
+import com.example.seniorbetterlife.data.repositories.RoomRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PedometerViewModel:ViewModel() {
+class PedometerViewModel(application: Application):AndroidViewModel(application) {
+
+    private val roomRepository: RoomRepository
+
+    init {
+        val myDataDao = MyDatabase.getDatabase(application).myDataDao()
+        roomRepository = RoomRepository(myDataDao)
+    }
 
     private val _isDailyStepsRetrieved = MutableLiveData<List<DailySteps>>()
     val isDailyStepsRetrieved: LiveData<List<DailySteps>> = _isDailyStepsRetrieved
 
-    /*fun getDailySteps(){
-        viewModelScope.launch(Dispatchers.Main) {
-            val listOfDailySteps = dao.getAllAsync()
-            _isDailyStepsRetrieved.postValue(listOfDailySteps)
-        }
-    }*/
+    val listOfDailySteps: LiveData<List<DailySteps>> = roomRepository.listOfDailySteps.asLiveData()
 }
