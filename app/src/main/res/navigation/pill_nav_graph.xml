@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pill_nav_graph"
+    app:startDestination="@id/addDrugFragment">
+
+    <fragment
+        android:id="@+id/addDrugFragment"
+        android:name="com.example.seniorbetterlife.ui.senior.pillReminder.AddDrugFragment"
+        android:label="Zdrowie"
+        tools:layout="@layout/fragment_add_drug" >
+        <action
+            android:id="@+id/action_addDrugFragment_to_drugNameAndDoseFragment"
+            app:destination="@id/drugNameAndDoseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/drugNameAndDoseFragment"
+        android:name="com.example.seniorbetterlife.ui.senior.pillReminder.DrugNameAndDoseFragment"
+        android:label="Wybierz lek"
+        tools:layout="@layout/fragment_drug_name_and_dose" >
+        <action
+            android:id="@+id/action_drugNameAndDoseFragment_to_frequencyDoseFragment"
+            app:destination="@id/frequencyDoseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleDrugFragment"
+        android:name="com.example.seniorbetterlife.ui.senior.pillReminder.ScheduleDrugFragment"
+        android:label="Harmonogram przyjmowania leku"
+        tools:layout="@layout/fragment_schedule_drug" >
+        <action
+            android:id="@+id/action_scheduleDrugFragment_to_addDrugFragment"
+            app:destination="@id/addDrugFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/frequencyDoseFragment"
+        android:name="com.example.seniorbetterlife.ui.senior.pillReminder.FrequencyDoseFragment"
+        android:label="Częstość przyjmowania leku"
+        tools:layout="@layout/fragment_frequency_dose" >
+        <action
+            android:id="@+id/action_frequencyDoseFragment_to_scheduleDrugFragment"
+            app:destination="@id/scheduleDrugFragment" />
+    </fragment>
+</navigation>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.seniorbetterlife.senior.maps.ListFragment"
+        android:name="com.example.seniorbetterlife.ui.senior.maps.ListFragment"
         android:label="Lista punktów na mapie"
         tools:layout="@layout/fragment_list" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/displayMapsFragment"
-        android:name="com.example.seniorbetterlife.senior.maps.DisplayMapsFragment"
+        android:name="com.example.seniorbetterlife.ui.senior.maps.DisplayMapsFragment"
         android:label="Punkty na mapie"
         tools:layout="@layout/fragment_display_maps" />
 </navigation>

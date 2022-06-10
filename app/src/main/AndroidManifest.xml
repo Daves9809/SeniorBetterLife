@@ -21,11 +21,11 @@
         android:theme="@style/Theme.SeniorBetterLife"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".pedometer.PedometerActivity"
+            android:name="com.example.seniorbetterlife.ui.senior.pedometer.PedometerActivity"
             android:exported="false"
             android:label="@string/title_activity_pedometer"/>
         <activity
-            android:name=".pillReminder.PillReminder"
+            android:name="com.example.seniorbetterlife.ui.senior.pillReminder.PillReminderActivity"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -43,18 +43,18 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".senior.helpPart.HelpActivity"
+            android:name="com.example.seniorbetterlife.ui.senior.helpPart.HelpActivity"
             android:exported="false"
             android:label="@string/title_activity_help" />
         <activity
-            android:name=".senior.maps.MapsActivity"
+            android:name="com.example.seniorbetterlife.ui.senior.maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name="com.example.seniorbetterlife.ui.loginRegister.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

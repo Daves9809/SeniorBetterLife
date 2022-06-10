@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/volunteerMapsFragment"
-        android:name="com.example.seniorbetterlife.volunteer.VolunteerMapsFragment"
+        android:name="com.example.seniorbetterlife.ui.volunteer.VolunteerMapsFragment"
         android:label="mapa pomocy"
         tools:layout="@layout/fragment_volunteer_maps" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.example.seniorbetterlife.profile.ProfileFragment"
+        android:name="com.example.seniorbetterlife.ui.profile.ProfileFragment"
         android:label="Profil"
         tools:layout="@layout/fragment_profile" >
         <action

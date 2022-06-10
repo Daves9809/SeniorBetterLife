@@ -29,4 +29,14 @@
     <string name="find_help">Znajdź Pomoc</string>
     <string name="tvVolunteer">Wolontariusz</string>
     <string name="tvSenior">Senior</string>
+    <string name="drug_name_hint">Nazwa leku</string>
+    <string name="next_btn">Dalej</string>
+    <string name="tv_frequency_dose">Jak często bierzesz lek?</string>
+    <string name="tvFrequency">Częstotliwość</string>
+    <string name="tvScheduleDescription">Poniżej ustaw godziny powiadomień dla wybranego leku</string>
+    <string name="btnAccept">Zaakceptuj</string>
+    <string name="tvNumberOfDose">Number of dose</string>
+    <string name="tvHour">Godzina</string>
+    <string name="tvDoseCount">Dawka</string>
+    <string name="tvFrequencyDescription">Wybrana częstotliwość</string>
 </resources>

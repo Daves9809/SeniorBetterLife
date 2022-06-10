@@ -15,7 +15,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tvTask"
+            android:id="@+id/tvDrugNamee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Zadanie ..."
@@ -26,7 +26,7 @@
             android:id="@+id/tvOpis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvTask"
+            android:layout_below="@id/tvDrugNamee"
             android:text="Opis zadania:"
             android:textSize="20sp"
             android:textStyle="bold" />

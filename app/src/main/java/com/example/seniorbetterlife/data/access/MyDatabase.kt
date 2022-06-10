@@ -4,10 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.seniorbetterlife.data.DoseConverters
 import com.example.seniorbetterlife.data.model.DailySteps
+import com.example.seniorbetterlife.data.model.DoctorAppointments
+import com.example.seniorbetterlife.data.model.Medicament
 import com.example.seniorbetterlife.util.Constants
 
-@Database(entities = [DailySteps::class], version = 3)
+@Database(entities = [DailySteps::class, Medicament::class, DoctorAppointments::class], version = 6)
+@TypeConverters(DoseConverters::class)
 abstract class MyDatabase: RoomDatabase() {
 
     abstract fun myDataDao(): MyDataDao

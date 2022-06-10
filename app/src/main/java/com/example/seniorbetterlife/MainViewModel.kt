@@ -7,7 +7,7 @@ import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.data.repositories.RoomRepository
-import com.example.seniorbetterlife.senior.helpPart.model.UserTask
+import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -3,13 +3,12 @@ package com.example.seniorbetterlife.data.repositories
 import android.util.Log
 import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
-import com.example.seniorbetterlife.senior.helpPart.model.UserTask
-import com.example.seniorbetterlife.senior.maps.model.UserMap
+import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
+import com.example.seniorbetterlife.ui.senior.maps.model.UserMap
 import com.example.seniorbetterlife.util.Resource
 import com.example.seniorbetterlife.util.safeCall
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await

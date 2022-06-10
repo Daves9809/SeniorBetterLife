@@ -22,13 +22,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.databinding.ActivityMainBinding
-import com.example.seniorbetterlife.login.LoginActivity
+import com.example.seniorbetterlife.ui.loginRegister.LoginActivity
 import com.example.seniorbetterlife.services.PedometerService
 import com.example.seniorbetterlife.util.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.tbruyelle.rxpermissions2.RxPermissions
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
