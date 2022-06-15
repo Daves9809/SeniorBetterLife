@@ -2,6 +2,7 @@ package com.example.seniorbetterlife.data.repositories
 
 import android.util.Log
 import com.example.seniorbetterlife.data.model.DailySteps
+import com.example.seniorbetterlife.data.model.Medicament
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
 import com.example.seniorbetterlife.ui.senior.maps.model.UserMap
@@ -190,6 +191,15 @@ class FirebaseRepository {
             .update(mapOf("dailySteps" to dailySteps))
             .await()
 
+    }
+
+    suspend fun addMedicamentsToFirebase(user: User, medicaments: List<Medicament>) {
+        withContext(Dispatchers.IO){
+            cloud.collection("users")
+                .document(user.uid!!)
+                .update(mapOf("medicaments" to medicaments))
+                .await()
+        }
     }
 
 

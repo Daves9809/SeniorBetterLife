@@ -52,25 +52,27 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadUser()
 
-        //observeData
+        observeData()
+
+        sensorConfigure()
+
+        getPermissions(this)
+
+    }
+
+    private fun observeData(){
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             user = it!!
             setDataToRoom(it)
             configureNavigation(it)
         })
-
-        //sensor configure
-        sensorConfigure()
-
-        //getPermissions
-        getPermissions(this)
-
     }
 
     private fun setDataToRoom(user: User) {
         if(user.senior){
             val listOfDailySteps: List<DailySteps?> = user.dailySteps
             viewModel.setRoomDailySteps(listOfDailySteps)
+            viewModel.setRoomMedicaments(user.medicaments)
         }
     }
 
@@ -177,18 +179,16 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this.applicationContext, LoginActivity::class.java).apply {
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // flag activity zabezpieczaja przed powrotem
         }
-        //czyszczenie podręcznej bazy przy logowaniu
 
         //data save to Firebase
         viewModel.getDailySteps()
         viewModel.dailySteps.observe(this, androidx.lifecycle.Observer {
             viewModel.saveDailySteps(user,it)
-            //clear all local data
             viewModel.clearLocalDatabase()
         })
 
         auth.signOut()
-        //stop of service
+
         val stopService = Intent(this@MainActivity, PedometerService::class.java)
         stopService.action = Constants.ACTION_STOP_FOREGROUND_ACTION
         startService(stopService)

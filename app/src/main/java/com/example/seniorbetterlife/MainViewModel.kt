@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.seniorbetterlife.data.access.MyDatabase
 import com.example.seniorbetterlife.data.model.DailySteps
+import com.example.seniorbetterlife.data.model.Medicament
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
 import com.example.seniorbetterlife.data.repositories.RoomRepository
@@ -71,6 +72,14 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 for(dailySteps in listOfDailySteps){
                     roomRepository.addDailySteps(dailySteps!!)
                 }
+            }
+        }
+    }
+
+    fun setRoomMedicaments(medicaments: List<Medicament>?) {
+        viewModelScope.launch {
+            if (medicaments != null) {
+                roomRepository.addMedicaments(medicaments)
             }
         }
     }

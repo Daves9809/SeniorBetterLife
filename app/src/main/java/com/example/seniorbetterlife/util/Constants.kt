@@ -23,4 +23,7 @@ object Constants {
 
     const val SHARED_PREFERENCES_IS_REBOOT = "SHARED_PREFERENCES_IS_REBOOT"
 
+    const val CHANNEL_PILL_REMIND_ID = "channelPillRemindID"
+    const val CHANNEL_PILL_REMIND_NAME = "channelPillRemindName"
+
 }

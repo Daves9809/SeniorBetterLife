@@ -1,12 +1,26 @@
 package com.example.seniorbetterlife.ui.senior.pillReminder
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.seniorbetterlife.data.access.MyDatabase
 import com.example.seniorbetterlife.data.model.Medicament
+import com.example.seniorbetterlife.data.repositories.FirebaseRepository
+import com.example.seniorbetterlife.data.repositories.MedicamentsRepository
+import com.example.seniorbetterlife.data.repositories.RoomRepository
 import com.example.seniorbetterlife.ui.senior.pillReminder.model.Dose
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-class PillReminderViewModel: ViewModel() {
+class PillReminderViewModel(application: Application): AndroidViewModel(application) {
+
+    private val medicamentsRepository: MedicamentsRepository
+    private val firebaseRepository = FirebaseRepository()
+
+    init {
+        val myDataDao = MyDatabase.getDatabase(application).myDataDao()
+        medicamentsRepository = MedicamentsRepository(myDataDao)
+    }
 
     private val _drugName = MutableLiveData<String>()
     val drugName: LiveData<String> = _drugName
@@ -17,8 +31,7 @@ class PillReminderViewModel: ViewModel() {
     private val _frequency = MutableLiveData<Int>()
     val frequency: LiveData<Int> = _frequency
 
-    private val _medicament = MutableLiveData<Medicament>()
-    val medicament: LiveData<Medicament> = _medicament
+    val medicaments:LiveData<List<Medicament>> = medicamentsRepository.medicaments.asLiveData()
 
     fun chooseDose(doseDescription: String) {
          val dose = when(doseDescription){
@@ -34,5 +47,22 @@ class PillReminderViewModel: ViewModel() {
 
     fun setName(drugName: String) = _drugName.postValue(drugName)
 
-    fun addMedicament(medicament: Medicament) = _medicament.postValue(medicament)
+    fun addMedicament(medicament: Medicament) {
+        viewModelScope.launch(Dispatchers.Main) {
+            medicamentsRepository.insertMedicament(medicament)
+        }
+    }
+
+    fun deleteMedicament(medicament: Medicament){
+        viewModelScope.launch {
+            medicamentsRepository.deleteMedicament(medicament)
+        }
+    }
+
+    fun saveMedicamentsToFirebase(medicaments: List<Medicament>){
+        viewModelScope.launch {
+            val user = firebaseRepository.getUserData()
+            firebaseRepository.addMedicamentsToFirebase(user!!,medicaments)
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.seniorbetterlife.data.access.MyDataDao
 import com.example.seniorbetterlife.data.model.DailySteps
+import com.example.seniorbetterlife.data.model.Medicament
 import com.example.seniorbetterlife.data.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -20,6 +21,11 @@ class RoomRepository(private val myDataDao: MyDataDao) {
     suspend fun addDailySteps(dailySteps: DailySteps){
         Log.d("RoomRepository","AddDailySteps = $dailySteps")
         myDataDao.insert(dailySteps)
+    }
+
+    suspend fun addMedicaments(medicaments: List<Medicament>) {
+        Log.d("RoomRepository","AddMedicaments = $medicaments")
+        myDataDao.insertAllMedicaments(medicaments)
     }
 
     suspend fun updateSteps(dailySteps: DailySteps){

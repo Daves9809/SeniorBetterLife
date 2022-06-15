@@ -3,20 +3,38 @@ package com.example.seniorbetterlife.ui.senior.pillReminder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.model.Medicament
 
-class AddDrugAdapter(private val dataSet: List<Medicament>): RecyclerView.Adapter<AddDrugAdapter.ViewHolder>()  {
+class AddDrugAdapter(): RecyclerView.Adapter<AddDrugAdapter.ViewHolder>()  {
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    private lateinit var mListener : onItemClickListener
+
+    interface onItemClickListener{
+        fun onDeleteClickListener(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener){
+        mListener = listener
+    }
+
+    private val myDataSet = mutableListOf<Medicament>()
+
+    inner class ViewHolder(view: View, listener: onItemClickListener): RecyclerView.ViewHolder(view) {
         val tvDrugName: TextView
         val tvHoursOfTake: TextView
 
         init {
             tvDrugName = view.findViewById(R.id.tvDrugNamee)
             tvHoursOfTake = view.findViewById(R.id.tvFrequencyDose)
+
+            //set listener functions to relevant views
+            itemView.findViewById<TextView>(R.id.tvDelete).setOnClickListener {
+                listener.onDeleteClickListener(adapterPosition)
+            }
         }
     }
 
@@ -25,13 +43,13 @@ class AddDrugAdapter(private val dataSet: List<Medicament>): RecyclerView.Adapte
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.card_view_design_pill_schedule, viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view,mListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvDrugName.text = dataSet[position].medicine
+        holder.tvDrugName.text = myDataSet[position].medicine
         val listOfHours: MutableList<String> = mutableListOf()
-        for (dailyDose in dataSet[position].dailyDoses) {
+        for (dailyDose in myDataSet[position].dailyDoses) {
             listOfHours.add(dailyDose.hourOfTake)
         }
         val hoursOfTake = hoursOfTake(listOfHours)
@@ -48,6 +66,12 @@ class AddDrugAdapter(private val dataSet: List<Medicament>): RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return dataSet.size
+        return myDataSet.size
+    }
+
+    fun setData(newData: List<Medicament>) {
+        myDataSet.clear()
+        myDataSet.addAll(newData)
+        notifyDataSetChanged()
     }
 }

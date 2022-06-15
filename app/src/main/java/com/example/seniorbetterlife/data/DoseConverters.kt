@@ -2,10 +2,12 @@ package com.example.seniorbetterlife.data
 
 import androidx.room.TypeConverter
 import com.example.seniorbetterlife.ui.senior.pillReminder.model.DoseProperties
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+@Serializable
 class DoseConverters {
     @TypeConverter
     fun fromList(value : List<DoseProperties>) = Json.encodeToString(value)

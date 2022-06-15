@@ -12,4 +12,6 @@ data class User(
     val age: String? = null,
     val sex: String? = null,
     val phoneNumber: String? = null,
-    val dailySteps: List<DailySteps?> = emptyList())
+    val dailySteps: List<DailySteps?> = emptyList(),
+    val medicaments: List<Medicament>? = emptyList()
+)
