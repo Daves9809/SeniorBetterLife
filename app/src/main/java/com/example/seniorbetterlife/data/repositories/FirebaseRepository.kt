@@ -6,8 +6,8 @@ import com.example.seniorbetterlife.data.model.Medicament
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
 import com.example.seniorbetterlife.ui.senior.maps.model.UserMap
-import com.example.seniorbetterlife.util.Resource
-import com.example.seniorbetterlife.util.safeCall
+import com.example.seniorbetterlife.utils.Resource
+import com.example.seniorbetterlife.utils.safeCall
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -201,6 +201,5 @@ class FirebaseRepository {
                 .await()
         }
     }
-
 
 }

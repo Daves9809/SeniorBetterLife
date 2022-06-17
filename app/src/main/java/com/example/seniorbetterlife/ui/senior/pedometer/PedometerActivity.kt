@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.databinding.ActivityPedometerBinding
-import com.example.seniorbetterlife.util.DateFormatter
+import com.example.seniorbetterlife.utils.DateFormatter
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -26,6 +26,11 @@ class PedometerActivity : AppCompatActivity() {
 
         currentDate = DateFormatter.getDate()
 
+        observeData()
+
+    }
+
+    private fun observeData() {
         viewModel.listOfDailySteps.observe(this) { listOfDailySteps ->
             listOfDailySteps.let {
                 listOfDailySteps.filter { it.day == DateFormatter.getDate() }[0].steps.toString()
@@ -40,8 +45,6 @@ class PedometerActivity : AppCompatActivity() {
                 setupColumnChart(listOfDailySteps.sortedBy { it.day })
             }
         }
-
-
     }
 
     private fun setUpInfo(dailySteps: DailySteps) {
@@ -98,7 +101,7 @@ class PedometerActivity : AppCompatActivity() {
 
         for(dailySteps in listOfDailySteps){
             entries.add(BarEntry(initializingPosition,dailySteps.steps.toFloat()))
-            labels.add(dailySteps.day)
+            labels.add(countChars(dailySteps.day))
             initializingPosition++
         }
 
@@ -115,6 +118,12 @@ class PedometerActivity : AppCompatActivity() {
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         barChart.animateY(1000)
+    }
 
+    private fun countChars(label: String):String {
+        if (label.length == 9)
+            return label.take(4)
+        else
+            return label.take(3)
     }
 }

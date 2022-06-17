@@ -7,6 +7,7 @@ import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.Medicament
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
+import com.example.seniorbetterlife.data.repositories.MedicamentsRepository
 import com.example.seniorbetterlife.data.repositories.RoomRepository
 import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
 import kotlinx.coroutines.Dispatchers
@@ -16,10 +17,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val firebaseRepository = FirebaseRepository()
     private val roomRepository: RoomRepository
+    private val medicamentsRepository: MedicamentsRepository
 
     init {
         val myDataDao = MyDatabase.getDatabase(application).myDataDao()
         roomRepository = RoomRepository(myDataDao)
+        medicamentsRepository = MedicamentsRepository(myDataDao)
     }
 
     private val _user = MutableLiveData<User?>()
@@ -34,6 +37,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val _dailySteps = MutableLiveData<List<DailySteps?>>()
     val dailySteps: LiveData<List<DailySteps?>> = _dailySteps
 
+
+    val medicaments:LiveData<List<Medicament>> = medicamentsRepository.medicaments.asLiveData()
 
     fun loadUser() {
         viewModelScope.launch(Dispatchers.Main) {
@@ -66,23 +71,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun setRoomDailySteps(listOfDailySteps: List<DailySteps?>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if(listOfDailySteps.isNotEmpty()){
-                for(dailySteps in listOfDailySteps){
-                    roomRepository.addDailySteps(dailySteps!!)
-                }
-            }
-        }
-    }
-
-    fun setRoomMedicaments(medicaments: List<Medicament>?) {
-        viewModelScope.launch {
-            if (medicaments != null) {
-                roomRepository.addMedicaments(medicaments)
-            }
-        }
-    }
     fun getDailySteps() {
         viewModelScope.launch(Dispatchers.IO) {
             val listOfDailySteps = roomRepository.getDailySteps()

@@ -15,7 +15,7 @@ import com.example.seniorbetterlife.databinding.ActivityHelpBinding
 import com.example.seniorbetterlife.ui.senior.helpPart.adapters.ViewPagerAdapter
 import com.example.seniorbetterlife.ui.senior.helpPart.model.UserAddress
 import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
-import com.example.seniorbetterlife.util.DateFormatter
+import com.example.seniorbetterlife.utils.DateFormatter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 

@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.databinding.FragmentProfileBinding
-import com.example.seniorbetterlife.util.Resource
+import com.example.seniorbetterlife.utils.Resource
 
 
 class ProfileFragment : Fragment(){

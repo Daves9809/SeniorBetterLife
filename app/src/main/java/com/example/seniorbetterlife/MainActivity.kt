@@ -2,7 +2,7 @@ package com.example.seniorbetterlife
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ActivityManager
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,16 +15,16 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.databinding.ActivityMainBinding
 import com.example.seniorbetterlife.ui.loginRegister.LoginActivity
 import com.example.seniorbetterlife.services.PedometerService
-import com.example.seniorbetterlife.util.Constants
+import com.example.seniorbetterlife.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -50,8 +50,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-        viewModel.loadUser()
-
         observeData()
 
         sensorConfigure()
@@ -60,20 +58,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun observeData(){
+        viewModel.loadUser()
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             user = it!!
-            setDataToRoom(it)
             configureNavigation(it)
         })
-    }
-
-    private fun setDataToRoom(user: User) {
-        if(user.senior){
-            val listOfDailySteps: List<DailySteps?> = user.dailySteps
-            viewModel.setRoomDailySteps(listOfDailySteps)
-            viewModel.setRoomMedicaments(user.medicaments)
-        }
     }
 
     fun isServiceRunningInForeground(): Boolean {
@@ -179,8 +171,10 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this.applicationContext, LoginActivity::class.java).apply {
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) // flag activity zabezpieczaja przed powrotem
         }
+        //remove all notifications
+        NotificationManagerCompat.from(this).cancelAll()
 
-        //data save to Firebase
+        //data save to Firebase anc clear room
         viewModel.getDailySteps()
         viewModel.dailySteps.observe(this, androidx.lifecycle.Observer {
             viewModel.saveDailySteps(user,it)

@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.ui.senior.maps.model.Place
 import com.example.seniorbetterlife.ui.senior.maps.model.UserMap
-import com.example.seniorbetterlife.util.MyImageRequestListener
+import com.example.seniorbetterlife.utils.MyImageRequestListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

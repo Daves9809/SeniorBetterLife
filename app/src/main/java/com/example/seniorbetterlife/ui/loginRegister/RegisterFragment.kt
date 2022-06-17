@@ -10,17 +10,18 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.seniorbetterlife.ui.senior.home.BaseFragment
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.databinding.FragmentRegisterBinding
-import com.example.seniorbetterlife.util.Resource
+import com.example.seniorbetterlife.utils.Resource
 
 
 class RegisterFragment : BaseFragment() {
 
     private val REG_DEBUG = "REG_DEBUG"
-    private val viewModel = RegLogViewModel()
+    private val viewModel: RegLogViewModel by activityViewModels()
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding
@@ -50,17 +51,20 @@ class RegisterFragment : BaseFragment() {
 
         bindViews()
         setupSignUpClick()
+        observeData()
 
+    }
+
+    override fun observeData() {
         binding.pbRegister.isVisible = false
-
         viewModel.userRegistrationStatus.observe(viewLifecycleOwner, Observer {
-            when(it){
+            when (it) {
                 is Resource.Loading -> {
                     binding.pbRegister.isVisible = true
                 }
                 is Resource.Success -> {
                     binding.pbRegister.isVisible = false
-                    Toast.makeText(this.context, "Register succesfully",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context, "Register succesfully", Toast.LENGTH_SHORT).show()
                     startApp()
                 }
                 is Resource.Error -> {
@@ -69,8 +73,7 @@ class RegisterFragment : BaseFragment() {
                 }
             }
         })
-
-        }
+    }
 
     private fun bindViews() {
         //binding elements of view
@@ -105,7 +108,7 @@ class RegisterFragment : BaseFragment() {
             val emaill = email.text.toString()
             val pass = password.text.toString()
             val repeatPass = repeatPassword.text.toString()
-            viewModel.createUser(emaill,pass,repeatPass,isSenior)
+            viewModel.createUser(emaill, pass, repeatPass, isSenior)
 
         }
     }

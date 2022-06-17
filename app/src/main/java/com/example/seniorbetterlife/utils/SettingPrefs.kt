@@ -1,4 +1,4 @@
-package com.example.seniorbetterlife.util
+package com.example.seniorbetterlife.utils
 
 import android.content.Context
 import androidx.datastore.core.DataStore

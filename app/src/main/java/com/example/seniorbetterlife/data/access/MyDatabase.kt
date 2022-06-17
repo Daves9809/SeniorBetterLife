@@ -9,9 +9,9 @@ import com.example.seniorbetterlife.data.DoseConverters
 import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.model.DoctorAppointments
 import com.example.seniorbetterlife.data.model.Medicament
-import com.example.seniorbetterlife.util.Constants
+import com.example.seniorbetterlife.utils.Constants
 
-@Database(entities = [DailySteps::class, Medicament::class, DoctorAppointments::class], version = 6)
+@Database(entities = [DailySteps::class, Medicament::class, DoctorAppointments::class], version = 7)
 @TypeConverters(DoseConverters::class)
 abstract class MyDatabase: RoomDatabase() {
 

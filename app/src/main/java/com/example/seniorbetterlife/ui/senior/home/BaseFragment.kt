@@ -12,4 +12,6 @@ abstract class BaseFragment : Fragment() {
        startActivity(intent)
    }
 
+    abstract fun observeData()
+
 }

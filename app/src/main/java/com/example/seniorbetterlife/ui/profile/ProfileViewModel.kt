@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.example.seniorbetterlife.MyApplication
 import com.example.seniorbetterlife.data.model.User
 import com.example.seniorbetterlife.data.repositories.FirebaseRepository
-import com.example.seniorbetterlife.util.Resource
+import com.example.seniorbetterlife.utils.Resource
 import kotlinx.coroutines.*
 
 class ProfileViewModel: ViewModel() {

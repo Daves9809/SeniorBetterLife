@@ -19,9 +19,9 @@ import com.example.seniorbetterlife.data.access.MyDataDao
 import com.example.seniorbetterlife.data.access.MyDatabase
 import com.example.seniorbetterlife.data.model.DailySteps
 import com.example.seniorbetterlife.data.repositories.RoomRepository
-import com.example.seniorbetterlife.util.Constants
-import com.example.seniorbetterlife.util.DateFormatter
-import com.example.seniorbetterlife.util.SettingPrefs
+import com.example.seniorbetterlife.utils.Constants
+import com.example.seniorbetterlife.utils.DateFormatter
+import com.example.seniorbetterlife.utils.SettingPrefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

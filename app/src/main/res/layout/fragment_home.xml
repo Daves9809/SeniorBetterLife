@@ -30,26 +30,27 @@
         android:id="@+id/PillReminderLinearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#9DB5C8"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="#9DB5C8"
-        app:layout_constraintTop_toBottomOf="@id/homeVerticalLine"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/homeHorizontalLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/homeHorizontalLine"
 
-        >
+        app:layout_constraintTop_toBottomOf="@id/homeVerticalLine"
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_learn" />
+            android:src="@drawable/ic_pharmacy" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Warsztaty"
+            android:text="Leki"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
