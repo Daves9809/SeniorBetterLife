@@ -15,19 +15,19 @@ Senior adds a task that is visible on the map for the volunteer.
 <img src="./screenshots/profile.png" width="30%" height="30%">
 
 ### Senior panel - Find Help(Znajdź pomoc)
-<img src="./screenshots/help_activity_active_tasks.png" width="30%" height="30%"><img src="./screenshots/help_activity_completed_tasks.png" width="30%" height="30%"><img src="./screenshots/help_activity_add_task.png" width="30%" height="30%">
+<img src="./screenshots/help_activity_active_tasks.png" width="30%" height="30%">&ensp;<img src="./screenshots/help_activity_completed_tasks.png" width="30%" height="30%"><img src="./screenshots/help_activity_add_task.png" width="30%" height="30%">
 
 ### Senior panel - Active Senior(Aktywny Senior)
-<img src="./screenshots/active_senior_list.png" width="30%" height="30%"><img src="./screenshots/active_senior_map.png" width="30%" height="30%">
+<img src="./screenshots/active_senior_list.png" width="30%" height="30%">&ensp;<img src="./screenshots/active_senior_map.png" width="30%" height="30%">
 
 ### Senior panel - Pedometer(Licznik kroków)
 <img src="./screenshots/pedometer.jpg" width="30%" height="30%">
 
 ### Senior panel - Pill reminder(Leki)
-<img src="./screenshots/pill_reminder_list.png" width="30%" height="30%"><img src="./gifs/pill_reminder.gif" width="30%" height="30%"><img src="./screenshots/pill_reminder_notification.png" width="30%" height="30%">
+<img src="./screenshots/pill_reminder_list.png" width="30%" height="30%">&ensp;<img src="./gifs/pill_reminder.gif" width="30%" height="30%"><img src="./screenshots/pill_reminder_notification.png" width="30%" height="30%">
 
 ### Volunteer panel & request for senior
-img src="./gifs/volunteer_panel.gif" width="30%" height="30%">img src="./gifs/help_activity_answer_senior.gif" width="30%" height="30%">
+<img src="./gifs/volunteer_panel.gif" width="30%" height="30%">&ensp;<img src="./gifs/help_activity_answer_senior.gif" width="30%" height="30%">
 
 ## Installation
 1. Download .zip 
