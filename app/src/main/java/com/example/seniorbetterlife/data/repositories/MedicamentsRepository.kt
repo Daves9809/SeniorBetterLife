@@ -15,11 +15,6 @@ class MedicamentsRepository(private val myDataDao: MyDataDao) {
         myDataDao.insertMedicament(medicament)
     }
 
-    suspend fun clearMedicaments() {
-        Log.d("MedicamentsRepository", "Clear Local Room Database from medicaments")
-        myDataDao.clearMedicaments()
-    }
-
     suspend fun deleteMedicament(medicament: Medicament){
         Log.d("MedicamentsRepository", "Medicament = $medicament deleted")
         myDataDao.deleteMedicament(medicament)

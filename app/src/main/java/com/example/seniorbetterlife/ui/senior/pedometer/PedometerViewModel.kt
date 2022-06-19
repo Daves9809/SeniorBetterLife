@@ -15,8 +15,5 @@ class PedometerViewModel(application: Application):AndroidViewModel(application)
         roomRepository = RoomRepository(myDataDao)
     }
 
-    private val _isDailyStepsRetrieved = MutableLiveData<List<DailySteps>>()
-    val isDailyStepsRetrieved: LiveData<List<DailySteps>> = _isDailyStepsRetrieved
-
     val listOfDailySteps: LiveData<List<DailySteps>> = roomRepository.listOfDailySteps.asLiveData()
 }

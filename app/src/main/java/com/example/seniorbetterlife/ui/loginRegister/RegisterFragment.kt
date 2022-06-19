@@ -76,7 +76,6 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun bindViews() {
-        //binding elements of view
         btnReg = binding.btnRegister
         email = binding.editRegEmail
         password = binding.editRegPassword

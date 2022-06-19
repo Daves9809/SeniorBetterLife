@@ -14,7 +14,6 @@ class MyApplication : Application() {
 
     companion object{
         lateinit var instance: MyApplication
-        lateinit var dataStore: DataStore<Preferences>
         fun getContext(): Context{
             return instance.applicationContext
         }

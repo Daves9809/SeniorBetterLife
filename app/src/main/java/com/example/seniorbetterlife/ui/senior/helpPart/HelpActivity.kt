@@ -38,13 +38,10 @@ class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
         setUpTabs()
         initializingVariables()
 
-        //without initializing app was crashing
-
         //initialize location client
         client = LocationServices.getFusedLocationProviderClient(this)
-        //download userData with coroutines
-        viewModel.getUserData()
 
+        viewModel.getUserData()
         observeData()
         checkPermissions()
 
@@ -76,7 +73,6 @@ class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
-        // showing info that user dismiss dialog
         Toast.makeText(this, "Zrezygnowano z dodania nowego zadania", Toast.LENGTH_SHORT).show()
     }
 

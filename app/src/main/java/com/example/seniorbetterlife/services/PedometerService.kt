@@ -40,17 +40,15 @@ class PedometerService : Service(), SensorEventListener {
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     private var isUserRelogged: Boolean = false
-    private var isDeviceRebooted: Boolean = false
     private var oldSteps: Int = 0
     private var stepsAfterLogin by Delegates.notNull<Int>()
-    private val settingPrefs = SettingPrefs(context = this)
 
 
     override fun onStartCommand(
         intent: Intent?,
         flags: Int,
         startId: Int
-    ): Int {// At the top level of your kotlin file:
+    ): Int {
         if (intent!!.action.equals(Constants.ACTION_START_FOREGROUND_ACTION)) {
             dao = MyDatabase.getDatabase(this).myDataDao()
             roomRepository = RoomRepository(dao!!)

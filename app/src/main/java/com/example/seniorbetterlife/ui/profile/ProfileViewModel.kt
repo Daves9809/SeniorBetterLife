@@ -13,7 +13,6 @@ class ProfileViewModel: ViewModel() {
 
     private val firebaseRepository = FirebaseRepository()
 
-    //in activities we're going to observe status
     private val _userUpdateStatus = MutableLiveData<Resource<Void>>()
     val userUpdateStatus: LiveData<Resource<Void>> = _userUpdateStatus
 
@@ -36,16 +35,4 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
-
-
-
-    private var stepsCount = 0
-    private val _stepsCount = MutableLiveData<String>("Liczba krokow: $stepsCount")
-    val steps: LiveData<String>
-        get() = _stepsCount
-
-    fun updateSteps() {
-            _stepsCount.value = MyApplication.getContext()
-                .getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("key1",0).toString()
-    }
 }

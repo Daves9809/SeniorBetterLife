@@ -17,7 +17,7 @@ class MapsActivity : AppCompatActivity() {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.navMapsFragment) // przypisanie navControllera
+        val navController = findNavController(R.id.navMapsFragment)
         setupActionBarWithNavController(navController)
     }
 }

@@ -16,8 +16,6 @@ import com.example.seniorbetterlife.utils.Resource
 
 class ProfileFragment : Fragment(){
 
-    private val PROFILE_DEBUG = "PROFILE_DEBUG"
-
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -37,9 +35,9 @@ class ProfileFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         bindViews()
         viewModel.getUserData()
-        viewModel.updateSteps()
         observeViewModel()
         onClickListeners()
     }

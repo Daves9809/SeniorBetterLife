@@ -27,13 +27,11 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
         viewModel.getUserMaps()
 
         binding.rvMaps.layoutManager = LinearLayoutManager(this.context)
-        //firebaseRepository.sendUserMap(generateSampleData())
 
         return binding.root
 
@@ -59,43 +57,5 @@ class ListFragment : Fragment() {
             })
         })
     }
-
-    /*private fun generateSampleData(): List<UserMap> {
-        return listOf(
-            UserMap("Sport",
-                listOf(
-                    Place("Silownia plenerowa",
-                        "Połącz aktywność fizyczną z radością przebywania na świeżym powietrzu. \n" +
-                                "Rodzaje sprzętów: Biegacz, Prasa nożna, Wahadło, Orbitrek, Drabinka, Prasa ręczna, Tai Chi skośne oraz proste, Wioślarz, Rowerek",
-                        50.04912800297385, 21.930073924827955,
-                        "https://firebasestorage.googleapis.com/v0/b/seniorbetterlife.appspot.com/o/sport%2Fsilownia_plenerowa_przybyszowka.jpg?alt=media&token=b728e956-370a-4190-8e9e-dd49423e934b"),
-                    Place("Siłownia plenerowa",
-                        "Połącz aktywność fizyczną z radością przebywania na świeżym powietrzu.\n" +
-                                "Rodzaje sprzętów: Biegacz, Prasa nożna, Wahadło, Orbitrek, Drabinka, Prasa ręczna, Tai Chi skośne oraz proste, Wioślarz, Rowerek",
-                        50.04048383610212, 22.046102715437943,
-                        "https://firebasestorage.googleapis.com/v0/b/seniorbetterlife.appspot.com/o/sport%2Fsilownia_plenerowa_mazowiecka.jpg?alt=media&token=5cb735f9-c1cb-4992-a2c9-7ccf911a8382"),
-                    Place("Siłownia plenerowa",
-                        "Połącz aktywność fizyczną z radością przebywania na świeżym powietrzu.\n" +
-                                "Rodzaje sprzętów: Biegacz, Prasa nożna, Wahadło, Orbitrek, Drabinka, Prasa ręczna, Tai Chi skośne oraz proste, Wioślarz, Rowerek",
-                        49.9693912923483, 21.987684698262427,
-                        "https://firebasestorage.googleapis.com/v0/b/seniorbetterlife.appspot.com/o/sport%2Fsilownia_plenerowa_budziwoj.jpg?alt=media&token=97f6512c-e533-4d7c-8a32-8badb015f3de"),
-                    Place("Siłownia w pomieszczeniu zamkniętym",
-                        "Siłownia znajduje się w filii RDK: Biała \n" +
-                                "Godziny otwarcia:\n" +
-                                "poniedziałki, środy, piątki: 16:00 – 21:00\n" +
-                                "wtorki, czwartki: 16:00 – 20:00",
-                        49.995815397778905, 22.00427039641695,
-                        "https://firebasestorage.googleapis.com/v0/b/seniorbetterlife.appspot.com/o/sport%2Fsilownia_zamknieta_filia_biala.png?alt=media&token=ba38f9f7-aad3-4c0d-8626-5c7231bdbdc8"),
-                    Place("Siłownia w pomieszczeniu zamkniętym",
-                        "Siłownia znajduje się w filii RDK: Przybyszówka \n" +
-                                "Godziny otwarcia:\n" +
-                                "od poniedziałku do piątku: 16:00 – 20:00",
-                        50.05358233048447, 21.946241213605454,
-                        "https://firebasestorage.googleapis.com/v0/b/seniorbetterlife.appspot.com/o/sport%2Fsilownia_zamknieta_filia_przybyszowka.png?alt=media&token=3835eb8e-a33a-4755-8697-01fc99f28330")
-                )
-            )
-
-        )
-    }*/
 
 }

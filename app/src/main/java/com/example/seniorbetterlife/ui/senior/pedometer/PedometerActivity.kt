@@ -30,22 +30,21 @@ class PedometerActivity : AppCompatActivity() {
 
     }
 
+
     private fun observeData() {
         viewModel.listOfDailySteps.observe(this) { listOfDailySteps ->
-            listOfDailySteps.let {
-                listOfDailySteps.filter { it.day == DateFormatter.getDate() }[0].steps.toString()
-
-                if (listOfDailySteps.isNotEmpty()) {
-                    val dailySteps = listOfDailySteps.filter { it.day == currentDate }
-                    if (dailySteps.isNotEmpty()) {
-                        setupDoughnutChart(dailySteps[0])
-                        setUpInfo(dailySteps[0])
+            if (listOfDailySteps.isNotEmpty())
+                listOfDailySteps.let {
+                    val dailySteps: DailySteps? = listOfDailySteps.filter { it.day == currentDate }[0]
+                    if (dailySteps != null) {
+                        setupDoughnutChart(dailySteps)
+                        setUpInfo(dailySteps)
                     }
                 }
-                setupColumnChart(listOfDailySteps.sortedBy { it.day })
-            }
+            setupColumnChart(listOfDailySteps.sortedBy { it.day })
         }
     }
+
 
     private fun setUpInfo(dailySteps: DailySteps) {
         binding.tvCountOfSteps.text = dailySteps.steps.toString()
@@ -65,17 +64,14 @@ class PedometerActivity : AppCompatActivity() {
 
     private fun setupDoughnutChart(dailySteps: DailySteps) {
 
-        //initialize reference
         val pieChart = binding.pieChart
 
         val currentSteps = dailySteps.steps.toFloat()
 
-        //add data
         val dataEntries = mutableListOf<PieEntry>()
         dataEntries.add(PieEntry(currentSteps, "Zrobione"))
         dataEntries.add(PieEntry((6000f - currentSteps), "Do zrobienia"))
 
-        //set colors
         val colors = arrayListOf(Color.parseColor("#3FD727"), Color.parseColor("#E52020"))
 
         val set = PieDataSet(dataEntries, "")
@@ -92,20 +88,19 @@ class PedometerActivity : AppCompatActivity() {
     }
 
     private fun setupColumnChart(listOfDailySteps: List<DailySteps>) {
-        //initialize reference
         val barChart = binding.barChart
 
         val entries = arrayListOf<BarEntry>()
         val labels = arrayListOf<String>()
         var initializingPosition = 0f
 
-        for(dailySteps in listOfDailySteps){
-            entries.add(BarEntry(initializingPosition,dailySteps.steps.toFloat()))
+        for (dailySteps in listOfDailySteps) {
+            entries.add(BarEntry(initializingPosition, dailySteps.steps.toFloat()))
             labels.add(countChars(dailySteps.day))
             initializingPosition++
         }
 
-        val barDataSet = BarDataSet(entries,"Dzienny wykres kroków")
+        val barDataSet = BarDataSet(entries, "Dzienny wykres kroków")
         barDataSet.setColors(Color.GREEN)
         barDataSet.valueTextColor = Color.BLACK
         barDataSet.valueTextSize = 16f
@@ -120,7 +115,7 @@ class PedometerActivity : AppCompatActivity() {
         barChart.animateY(1000)
     }
 
-    private fun countChars(label: String):String {
+    private fun countChars(label: String): String {
         if (label.length == 9)
             return label.take(4)
         else

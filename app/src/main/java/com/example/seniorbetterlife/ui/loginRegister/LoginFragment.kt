@@ -37,8 +37,7 @@ import java.util.*
 class LoginFragment : BaseFragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private val LOG_DEBUG = "LOG_DEBUG"
-    //inicjacja referencji do elementow z xmla, aby nastepnie je zbindowac
+
     private lateinit var btnLogin: Button
     private lateinit var tvRegister: TextView
     private lateinit var editEmail: EditText
@@ -113,7 +112,6 @@ class LoginFragment : BaseFragment() {
         viewModel.medicaments.observe(viewLifecycleOwner, Observer { medicaments ->
             if(helpVar ==0){
                 createNotifications(medicaments)
-                Log.d("SETUPNOTIFICATIONS","TEST")
             }
             helpVar++
         })
@@ -139,7 +137,6 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun bindViews() {
-        //bindowanie przyciskow do zmiennych
         tvRegister = binding.tvRegister
         btnLogin = binding.btnLogin
         editEmail = binding.editLoginEmail
@@ -147,14 +144,12 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun setupRegistrationClick() {
-        //przenies do registration fragment
         tvRegister.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegister().actionId)
         }
     }
 
     private fun setupLoginClick() {
-        //dokonaj logowania
         btnLogin.setOnClickListener {
             val email = editEmail.text.trim().toString()
             val password = editPassword.text.trim().toString()

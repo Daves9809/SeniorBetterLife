@@ -29,7 +29,6 @@ class ActiveTaskAdapter(private val listOfUserTasks: List<UserTask>): RecyclerVi
         return ViewHolder(view,mListener)
     }
 
-    //binds the list items to a view
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ActiveTaskAdapter.ViewHolder, position: Int) {
 
@@ -39,12 +38,10 @@ class ActiveTaskAdapter(private val listOfUserTasks: List<UserTask>): RecyclerVi
         holder.tvDescription.text = userTask.description
     }
 
-    //return number of items in the list
     override fun getItemCount(): Int {
         return listOfUserTasks.size
     }
 
-    // Holds views for adding them to texts
     class ViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
         val tvNumberOfTask: TextView = itemView.findViewById(R.id.tvDrugNamee)
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)

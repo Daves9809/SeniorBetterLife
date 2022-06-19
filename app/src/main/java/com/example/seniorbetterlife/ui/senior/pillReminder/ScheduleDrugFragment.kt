@@ -48,7 +48,6 @@ class ScheduleDrugFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentScheduleDrugBinding.inflate(inflater, container, false)
 
         bindViews()
@@ -84,7 +83,11 @@ class ScheduleDrugFragment : Fragment() {
     private fun createNotification(medicament: Medicament) {
         alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         for (dailyDose in medicament.dailyDoses) {
-            val pendingIntent = IntentBuildHelper.createPendingIntent(medicament.notificationID,medicament.medicine,applicationContext = MyApplication.getContext())
+            val pendingIntent = IntentBuildHelper.createPendingIntent(
+                medicament.notificationID,
+                medicament.medicine,
+                applicationContext = MyApplication.getContext()
+            )
 
             alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,

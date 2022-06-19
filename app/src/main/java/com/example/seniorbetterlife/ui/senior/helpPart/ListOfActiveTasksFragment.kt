@@ -30,17 +30,13 @@ class ListOfActiveTasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentListOfActiveTasksBinding.inflate(inflater,container,false)
 
         onClickListeners()
-        // getting the recyclerview by its id
-        recyclerView = binding.recyclerView
 
-        // this creates a vertical layout Manager
+        recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        //swipe refresher to updateListOfTasks
         refreshApp()
 
         return binding.root
@@ -71,10 +67,9 @@ class ListOfActiveTasksFragment : Fragment() {
 
         viewModel.isUserTaskRetrieved.observe(viewLifecycleOwner, Observer { listOfUserTasks ->
             val listOfUserTaskss = listOfUserTasks as List<UserTask>
-            //filter for activeTasks
-            val listOfActiveTasks = listOfUserTaskss.filter { it.finished == false }
 
-            //bindowanie taskow do recyclerView
+            val listOfActiveTasks = listOfUserTaskss.filter { !it.finished }
+
             val adapter = ActiveTaskAdapter(listOfActiveTasks)
             recyclerView.adapter = adapter
 
@@ -87,7 +82,6 @@ class ListOfActiveTasksFragment : Fragment() {
                 }
 
                 override fun onNegativeButtonClick(position: Int) {
-                    //delete from firebase
                     viewModel.deleteUserTask(listOfActiveTasks[position])
                     Toast.makeText(requireContext(),"Zadanie zostało usunięte",Toast.LENGTH_SHORT).show()
                 }

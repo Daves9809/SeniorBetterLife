@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.ui.senior.maps.model.Place
 import com.example.seniorbetterlife.ui.senior.maps.model.UserMap
-import com.example.seniorbetterlife.utils.MyImageRequestListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -32,7 +31,7 @@ import java.util.*
 
 private const val TAG = "DisplayMapsFragment"
 
-class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
+class DisplayMapsFragment : Fragment() {
 
     private lateinit var userMap: UserMap
 
@@ -67,9 +66,8 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //pobranie argumentów z bundle, rodzaj userMapy jaki zostal wybrany
+        //get Bundle data
         userMap = arguments?.get("userMap") as UserMap
-        //ustawienie tytułu action bar
         findNavController()
 
         return inflater.inflate(R.layout.fragment_display_maps, container, false)
@@ -87,7 +85,6 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
     private fun observeViewModel() {
         viewModel.isUserDataAvailable.observe(viewLifecycleOwner) { userMap ->
         Log.d("Usermapa:", userMap!!.title)
-        //dodanie miejsc na mapie do listy
         userMap.places.forEach { listOfPlaces.add(it) }
     }
     }
@@ -96,8 +93,6 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
     inner class CustomInfoWindowAdapter(con:Context, val markerSet: Hashtable<String, Boolean>) : GoogleMap.InfoWindowAdapter {
         val context: Context = con
 
-        // These are both view groups containing an ImageView with id "badge" and two
-        // TextViews with id "title" and "snippet".
         private val window: View = layoutInflater.inflate(R.layout.custom_info_window, null)
         private val contents: View = layoutInflater.inflate(R.layout.custom_info_contents, null)
 
@@ -129,7 +124,6 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
                 Picasso.get().load(link).into(imageView,InfoWindowRefresher(marker));
             }
 
-
             // Set the title and snippet for the custom info window
             val title: String? = marker.title
             val titleUi = view.findViewById<TextView>(R.id.title)
@@ -144,15 +138,6 @@ class DisplayMapsFragment : Fragment(), MyImageRequestListener.Callback {
         }
 
     }
-
-    override fun onFailure(message: String?) {
-        Toast.makeText(this.context, "Fail to load: $message", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onSuccess(dataSource: String) {
-        Toast.makeText(this.context, "Loaded from: $dataSource", Toast.LENGTH_SHORT).show()
-    }
-
 
 }
 

@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
         auth = FirebaseAuth.getInstance()
 
         observeData()
@@ -99,8 +100,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureNavigation(user: User) {
         val isSenior= user.senior
-        val navMenu = binding.bottomNavigationView // przypisanie menuNawigacji(dolny panel)
-        val navController = findNavController(R.id.navFragment) // przypisanie navControllera
+        val navMenu = binding.bottomNavigationView
+        val navController = findNavController(R.id.navFragment)
         //setting navController which depends on senior/volunteer
         if(isSenior) {
             navController.setGraph(R.navigation.senior_nav_graph)
@@ -174,7 +175,7 @@ class MainActivity : AppCompatActivity() {
         //remove all notifications
         NotificationManagerCompat.from(this).cancelAll()
 
-        //data save to Firebase anc clear room
+        //data save to Firestore anc clear room
         viewModel.getDailySteps()
         viewModel.dailySteps.observe(this, androidx.lifecycle.Observer {
             viewModel.saveDailySteps(user,it)

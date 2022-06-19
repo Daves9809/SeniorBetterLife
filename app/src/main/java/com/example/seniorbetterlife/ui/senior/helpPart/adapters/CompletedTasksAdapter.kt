@@ -10,6 +10,7 @@ import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
 
 class CompletedTasksAdapter(private val listOfCompletedUserTasks: List<UserTask>) :
     RecyclerView.Adapter<CompletedTasksAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

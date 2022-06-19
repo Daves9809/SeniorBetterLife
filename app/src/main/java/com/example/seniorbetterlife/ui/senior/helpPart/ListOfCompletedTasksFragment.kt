@@ -21,8 +21,6 @@ class ListOfCompletedTasksFragment : Fragment() {
     private var _binding: FragmentListOfCompletedTasksBinding? = null
     private val binding get() = _binding!!
 
-    private val TAG = this.tag
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var user: User
 
@@ -32,7 +30,6 @@ class ListOfCompletedTasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentListOfCompletedTasksBinding.inflate(inflater,container,false)
 
         recyclerView = binding.recyclerView
@@ -51,7 +48,6 @@ class ListOfCompletedTasksFragment : Fragment() {
     }
 
     private fun observeData() {
-        //download user
         viewModel.isUserDataAvailable.observe(viewLifecycleOwner, Observer {
             //Declare tasks
             user = it!!

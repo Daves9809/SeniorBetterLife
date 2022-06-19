@@ -80,6 +80,7 @@ class RegLogViewModel(application: Application): AndroidViewModel(application) {
             _user.postValue(user)
         }
     }
+
     fun setRoomDailySteps(listOfDailySteps: List<DailySteps?>) {
         viewModelScope.launch(Dispatchers.IO) {
             if(listOfDailySteps.isNotEmpty()){

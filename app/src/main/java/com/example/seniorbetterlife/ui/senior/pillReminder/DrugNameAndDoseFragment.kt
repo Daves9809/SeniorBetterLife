@@ -26,8 +26,7 @@ class DrugNameAndDoseFragment : Fragment(), AdapterView.OnItemSelectedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        _binding =  FragmentDrugNameAndDoseBinding.inflate(inflater, container, false)
+        _binding = FragmentDrugNameAndDoseBinding.inflate(inflater, container, false)
 
         initializeSpinner()
         onClickListeners()
@@ -37,12 +36,13 @@ class DrugNameAndDoseFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun onClickListeners() {
         binding.btnNext.setOnClickListener {
-            if(binding.etDrugName.text.isNotEmpty())
-            {
+            if (
+                binding.etDrugName.text.isNotEmpty()) {
                 viewModel.setName(binding.etDrugName.text.toString())
                 findNavController().navigate(R.id.action_drugNameAndDoseFragment_to_frequencyDoseFragment)
-            }else
-                Toast.makeText(requireContext(),"Pola nie mogą byc puste",Toast.LENGTH_SHORT).show()
+            } else
+                Toast.makeText(requireContext(), "Pola nie mogą byc puste", Toast.LENGTH_SHORT)
+                    .show()
         }
     }
 
@@ -51,7 +51,8 @@ class DrugNameAndDoseFragment : Fragment(), AdapterView.OnItemSelectedListener {
         spinner.onItemSelectedListener = this
         val categories = ArrayList<String>()
         categories.addAll(Dose.values().map { it.description })
-        val dataAdapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item,categories)
+        val dataAdapter =
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, categories)
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapter
     }

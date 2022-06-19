@@ -16,13 +16,6 @@ import java.util.*
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        /*val prefs: SharedPreferences? =
-            context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        var notificationNumber = prefs?.getInt("notificationNumber",0) ?: 0*/
-
- /*       val random = Random()
-        val zmienna = random.nextInt(9999 - 1000) + 1000*/
-
         val description = intent?.getStringExtra("drugDescription") ?: "description is null"
         val uniqueID = intent?.getIntExtra("uniqueID",0) ?: 0
 
