@@ -33,15 +33,22 @@ class PedometerActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.listOfDailySteps.observe(this) { listOfDailySteps ->
-            if (listOfDailySteps.isNotEmpty())
+            if (listOfDailySteps.isNotEmpty()) {
                 listOfDailySteps.let {
-                    val dailySteps: DailySteps? = listOfDailySteps.filter { it.day == currentDate }[0]
-                    if (dailySteps != null) {
+                    val dailySteps: DailySteps? =
+                        listOfDailySteps.filter { it.day == currentDate }.firstOrNull()
+                    if(dailySteps !=null){
                         setupDoughnutChart(dailySteps)
                         setUpInfo(dailySteps)
+                    }else{
+                        viewModel.addInitialDailyStep()
                     }
                 }
-            setupColumnChart(listOfDailySteps.sortedBy { it.day })
+                setupColumnChart(listOfDailySteps.sortedBy { it.day })
+            }
+            else if(listOfDailySteps.isEmpty() && listOfDailySteps == null){
+                viewModel.addInitialDailyStep()
+            }
         }
     }
 

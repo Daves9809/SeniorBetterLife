@@ -107,7 +107,6 @@ class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
             )
             viewModel.addUserTask(userTask, DateFormatter.getDateWithTime())
         }
-
     }
 
     private fun checkPermissions() {

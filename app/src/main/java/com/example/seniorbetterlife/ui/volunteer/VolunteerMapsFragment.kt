@@ -88,10 +88,9 @@ class VolunteerMapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
         }
     }
 
-    override fun onInfoWindowClick(p0: Marker) {
-        //create dialog
+    override fun onInfoWindowClick(marker: Marker) {
         val userTask =
-            listOfUserTasks.filter { it.description == p0.snippet && it.userAddress.lattitude == p0.position.latitude }[0]
+            listOfUserTasks.filter { it.description == marker.snippet && it.userAddress.lattitude == marker.position.latitude }[0]
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Pomoc dla ${userTask.user.name + " " + userTask.user.surname}")
             .setMessage(

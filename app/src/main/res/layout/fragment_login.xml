@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4FCCCB"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -28,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="Zapomniałeś hasła?"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <Button
@@ -48,7 +47,7 @@
         android:layout_gravity="center"
         android:paddingTop="10dp"
         android:text="Nie masz konta? Załóż je teraz"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold" />
     <ProgressBar
         android:id="@+id/pbLogin"

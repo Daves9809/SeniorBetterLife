@@ -99,7 +99,6 @@ class ScheduleDrugFragment : Fragment() {
                 "HourOfTakes = ${DateFormatter.getTimeInMillis(dailyDose.hourOfTake)}"
             )
         }
-
     }
 
     private fun setAdapter() {

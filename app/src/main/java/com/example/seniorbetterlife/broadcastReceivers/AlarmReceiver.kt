@@ -34,6 +34,5 @@ class AlarmReceiver : BroadcastReceiver() {
         )
         notificationManagerCompat.notify(uniqueID, builder.build())
         Log.d("UNIQUEID","$uniqueID")
-
     }
 }

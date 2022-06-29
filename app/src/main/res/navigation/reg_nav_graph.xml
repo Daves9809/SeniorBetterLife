@@ -20,5 +20,11 @@
         tools:layout="@layout/fragment_register"
         android:id="@+id/register"
         android:name="com.example.seniorbetterlife.ui.loginRegister.RegisterFragment"
-        android:label="Register" />
+        android:label="Register" >
+        <action
+            android:id="@+id/action_register_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

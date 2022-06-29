@@ -41,7 +41,6 @@ class PillScheduleAdapter(
                 isHourChoosen = true
             }
             isNumberOfDoseChoosen = itemView.findViewById<Spinner>(R.id.spinnerDoseCount).callOnClick()
-
         }
 
 

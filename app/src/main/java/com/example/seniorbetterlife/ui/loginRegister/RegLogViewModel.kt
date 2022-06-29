@@ -38,7 +38,7 @@ class RegLogViewModel(application: Application): AndroidViewModel(application) {
 
     val medicaments:LiveData<List<Medicament>> = medicamentsRepository.medicaments.asLiveData()
 
-    fun createUser(email: String, password: String, repeatedPassword: String,isSenior: Boolean) {
+    fun createUser(email: String, password: String, repeatedPassword: String, isSenior: Boolean) {
         var error =
             if (email.isEmpty() || password.isEmpty() || repeatedPassword.isEmpty() ) {
                 "Empty Strings"

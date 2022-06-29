@@ -5,13 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.seniorbetterlife.ui.senior.home.BaseFragment
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.databinding.FragmentRegisterBinding
@@ -33,6 +31,7 @@ class RegisterFragment : BaseFragment() {
     private lateinit var repeatPassword: EditText
     private lateinit var ivSenior: LinearLayout
     private lateinit var ivJunior: LinearLayout
+    private lateinit var tvHaveAccount: TextView
 
     private var isSenior: Boolean = true
 
@@ -50,7 +49,7 @@ class RegisterFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bindViews()
-        setupSignUpClick()
+        setupClickListeners()
         observeData()
 
     }
@@ -82,6 +81,7 @@ class RegisterFragment : BaseFragment() {
         repeatPassword = binding.editRegRepeat
         ivSenior = binding.IVsenior
         ivJunior = binding.IVjunior
+        tvHaveAccount = binding.tvRegRegister
         isSenior = isSeniorOrJunior()
         changeColor(isSenior)
     }
@@ -102,13 +102,15 @@ class RegisterFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun setupSignUpClick() {
+    private fun setupClickListeners() {
         btnReg.setOnClickListener {
             val emaill = email.text.toString()
             val pass = password.text.toString()
             val repeatPass = repeatPassword.text.toString()
             viewModel.createUser(emaill, pass, repeatPass, isSenior)
-
+        }
+        tvHaveAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_register_to_loginFragment)
         }
     }
 
