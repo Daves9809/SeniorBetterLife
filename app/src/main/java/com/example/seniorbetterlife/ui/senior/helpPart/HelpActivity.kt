@@ -18,6 +18,7 @@ import com.example.seniorbetterlife.ui.senior.helpPart.model.UserTask
 import com.example.seniorbetterlife.utils.DateFormatter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 
 
 class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
@@ -69,7 +70,6 @@ class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
 
     override fun onDialogPositiveClick(kindOfHelp: String) {
         getLastKnownLocation(kindOfHelp)
-        Toast.makeText(this, "Pomyślnie dodano nowe zadanie", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
@@ -88,25 +88,42 @@ class HelpActivity : AppCompatActivity(), AddTaskDialogFragment.DialogListener {
 
     @SuppressLint("MissingPermission")
     private fun getLastKnownLocation(kindOfHelp: String) {
+        var booleanHelper = false
         var userAddress: UserAddress? = null
         client.lastLocation.addOnCompleteListener {
             val latitude: Double? = it.result?.latitude
             val longitude: Double? = it.result?.longitude
-            val geoCoder = Geocoder(this)
-            Log.d("geocoder",geoCoder.toString())
-            Log.d("geocoder","$latitude,$longitude")
-            val matches = geoCoder.getFromLocation(latitude!!, longitude!!, 1)
-            userAddress = userAddressHelper.getUserAddressFromGeoLocation(matches)
+            if (latitude != null && longitude != null) {
+                val geoCoder = Geocoder(this)
+                val matches = geoCoder.getFromLocation(latitude, longitude, 1)
+                userAddress = userAddressHelper.getUserAddressFromGeoLocation(matches)
+            }
         }.addOnSuccessListener {
-            val userTask = createUserTask(
-                userAddress!!,
-                user,
-                DateFormatter.getDateWithTime(),
-                description = kindOfHelp,
-                isFinished = false
-            )
-            viewModel.addUserTask(userTask, DateFormatter.getDateWithTime())
+            if (userAddress != null) {
+                booleanHelper = true
+                val userTask = createUserTask(
+                    userAddress!!,
+                    user,
+                    DateFormatter.getDateWithTime(),
+                    description = kindOfHelp,
+                    isFinished = false
+                )
+                viewModel.addUserTask(userTask, DateFormatter.getDateWithTime())
+            }
+            showToast(booleanHelper)
         }
+    }
+
+    private fun showToast(booleanHelper: Boolean) {
+        if (booleanHelper)
+            Toast.makeText(this, "Pomyślnie dodano nowe zadanie", Toast.LENGTH_SHORT)
+                .show()
+        else
+            Toast.makeText(
+                this,
+                "Brak lokalizacji, spróbuj uruchomić google maps i spróbuj ponownie",
+                Toast.LENGTH_LONG
+            ).show()
     }
 
     private fun checkPermissions() {

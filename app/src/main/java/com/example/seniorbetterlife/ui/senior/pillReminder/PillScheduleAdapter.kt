@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorbetterlife.R
 import com.example.seniorbetterlife.ui.senior.pillReminder.model.Dose
+import com.example.seniorbetterlife.utils.PillHelper
 
 class PillScheduleAdapter(
     private val frequency: Int, private val dose: Dose) :
